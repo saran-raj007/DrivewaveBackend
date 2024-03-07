@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./static/css/home.css">
+    <title>Document</title>
+</head>
+<body>
+    <!--Header-->
+    <header class="p-3 bg-clr text-white">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <img src="./static/images/logo.png" alt="logo" width="50" height="60" >
+            </a>
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="#" class="nav-link px-2 text-dark">Home</a></li>
+              <!-- <li><a href="#" class="nav-link px-2 text-dark">Features</a></li>
+              <li><a href="#" class="nav-link px-2 text-dark">Pricing</a></li>
+              <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
+              <li><a href="#" class="nav-link px-2 text-dark">About</a></li> -->
+            </ul>
+    
+            <div class="text-end">
+              <button type="button" class="btn btn-outline-light me-2">Login</button>
+              <button type="button" class="btn btn-warning">Sign-up</button>
+            </div>
+          </div>
+        </div>
+    </header>
+
+    <!--Search bar-->
+    <div class="search-box">
+        <h1> Self-Drive Vehicle Rentals in Bangalore </h1>
+        <h3>Book your drive now!</h3>
+        <div class="search-field">
+                
+                <select name="" id="" class="form-control" style="width :250px;">
+                  <option value="" disabled selected>select location</option>
+                  <option value="Bike"> Majestic Bus Stand </option>
+                  <option value="Car"> Yeshwanthpur, Bengaluru, Karna... </option>
+                </select>
+                <input type="datetime-local" id="start-time" min="" class="form-control" placeholder="select pickup and drop time and date">
+                <input type="datetime-local" id="end-time" min="" class="form-control" placeholder="select pickup and drop time and date">
+                <select name="" id="" class="form-control" style="width :250px;">
+                  <option value="" disabled selected>select vehicle type</option>
+                  <option value="Bike">Bike</option>
+                  <option value="Car">Car</option>
+                </select>
+                <button type="button" id="search">Search</button>
+        </div>
+
+    </div>
+
+    <!--section-1-->
+    <div class="popular">
+        <div class="vehicle-list">
+            <div class="card" style="width: 18rem;">
+                <img src="./static/images/bike.jpg" class="card-img-top" alt="..." height="200">
+                <div class="card-body">
+                  <div class="ratring-rides d-flex flex-column gap-1">
+                    <span class="fa fa-star checked">4.5</span>
+                    <span>10 trips</span>
+                  </div>
+                  <div calss="car-name">
+                    <strong>Supra | 2003</strong>
+                  </div>
+                  <div class="features d-flex gap-3">
+                    <li class="text-black-50">Manual</li>
+                    <li class="text-black-50" >petrol</li>
+                    <li class="text-black-50">4 Seats</li>
+                  </div>
+                  <div class="cost">
+                    <strong> ₹199/hr </strong>
+
+                  </div>
+
+                  
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img src="./static/images/car.jpg" class="card-img-top" alt="..." height="200">
+                <div class="card-body">
+                  <!-- <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                  <div class="ratring-rides d-flex flex-column gap-1">
+                    <span class="fa fa-star checked">4.5</span>
+                    <span>10 trips</span>
+                  </div>
+                  <div calss="car-name">
+                    <strong>Supra | 2003</strong>
+                  </div>
+                  <div class="features d-flex gap-3">
+                    <li class="text-black-50">Manual</li>
+                    <li class="text-black-50" >petrol</li>
+                    <li class="text-black-50">4 Seats</li>
+                  </div>
+                  <div class="cost">
+                    <strong> ₹199/hr </strong>
+
+                  </div>
+              
+                  
+                 
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img src="./static/images/carr.jpg" class="card-img-top" alt="..." height="200">
+                <div class="card-body">
+                  <div class="ratring-rides d-flex flex-column gap-1">
+                    <span class="fa fa-star checked">4.5</span>
+                    <span>10 trips</span>
+                  </div>
+                  <div calss="car-name">
+                    <strong>Supra | 2003</strong>
+                  </div>
+                  <div class="features d-flex gap-3">
+                    <li class="text-black-50">Manual</li>
+                    <li class="text-black-50" >petrol</li>
+                    <li class="text-black-50">4 Seats</li>
+                  </div>
+                  <div class="cost">
+                    <strong> ₹199/hr </strong>
+
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                <img src="./static/images/bike.jpg" class="card-img-top" alt="..."  height="200">
+                <div class="card-body">
+                  <div class="ratring-rides d-flex flex-column gap-1">
+                    <span class="fa fa-star checked">4.5</span>
+                    <span>10 trips</span>
+                  </div>
+                  <div calss="car-name">
+                    <strong>Supra | 2003</strong>
+                  </div>
+                  <div class="features d-flex gap-3">
+                    <li class="text-black-50">Manual</li>
+                    <li class="text-black-50" >petrol</li>
+                    <li class="text-black-50">4 Seats</li>
+                  </div>
+                  <div class="cost">
+                    <strong> ₹199/hr </strong>
+
+                  </div>
+  
+                 
+                </div>
+              </div>
+
+        </div>
+
+    </div>
+    <!--setps to get vehicle for rent-->
+    <!-- <div class="steps">
+      <div class="list-steps">
+        <div class="step">
+
+        </div>
+      
+        
+        <div class="step">
+
+        </div>
+       
+        
+        <div class="step">
+
+        </div>
+        <div class="step">
+
+        </div>
+        
+
+      </div>
+      <div class="des">
+        <h5>hello</h5>
+        <h5>hello</h5>
+        <h5>hello</h5>
+        <h5>hello</h5>
+      </div>
+     
+
+    </div> -->
+    <!--customer review-->
+    <div class="review">
+      <div class="review-cards">
+        <div class="card" style="width: 18rem;">
+          <img src="./static/images/profile.png" class="card-img-top profile-img" alt="...">
+          <div class="card-body">
+            
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+          <img src="./static/images/profile.png" class="card-img-top profile-img" alt="...">
+          <div class="card-body">
+            
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+          <img src="./static/images/profile.png" class="card-img-top profile-img" alt="...">
+          <div class="card-body">
+            
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!--Query form-->
+    <div class="query">
+      <form action="">
+          <div class="form-title">
+            <h3>
+              Query Form
+            </h3>
+          </div>
+          <div class="query-fields">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="area" name="area" placeholder="" required>
+              <label for="floatingInput">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea class="form-control" placeholder="Leave a comment here" id="query" name="query" rows="8" cols="50" required></textarea>
+              <label for="floatingInput">Enter your queries</label>
+              </div>
+
+          </div>
+          <div class="query-btn">
+            <button>
+              submit
+            </button>
+
+
+          </div>
+        
+    
+      </form>
+
+    </div>
+    <!--Footer-->
+    <div class="container">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+          </a>
+          <span class="mb-3 mb-md-0 text-muted">&copy; 2022 Company, Inc</span>
+        </div>
+    
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+          <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+          <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+        </ul>
+      </footer>
+    </div>
+    <script>
+      const redirect=document.getElementById("search");
+      redirect.addEventListener("click", ()=>{
+       // alert("*");
+        window.location.href="search.html";
+
+      });
+      const now = new Date().toISOString().slice(0, 16);
+      // Set the min attribute of the input to the current date and time
+      document.getElementById('start-time').setAttribute('min', now);
+      document.getElementById('end-time').setAttribute('min', now);
+    </script>
+</body>
+</html>
