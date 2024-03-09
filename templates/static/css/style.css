@@ -10,7 +10,7 @@ html,body{
   height: 100%;
   width: 100%;
   place-items: center;
-  background-image: url('./templates/static/images/images.jpg');
+  background-image: url('../images/images.jpg');
   background-size: cover; /* Adjust as needed */
   background-repeat: no-repeat; /* Adjust as needed */
 }
@@ -171,7 +171,7 @@ form .btn .btn-layer{
 form .btn:hover .btn-layer{
   left: 0;
 }
-form .btn input[type="submit"]{
+form .btn button{
   height: 100%;
   width: 100%;
   z-index: 1;

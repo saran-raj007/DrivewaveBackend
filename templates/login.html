@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login and Signup Form</title>
-  <link rel="stylesheet" href="./static/css/style.css">
+  <link rel="stylesheet" href="templates/static/css/style.css">
 
 </head>
 <body>
@@ -39,23 +39,22 @@
       </form>
       <form action="#" class="signup">
         <div class="field">
-            <input type="text" placeholder="Username" required>
+            <input type="text" id="susername" name="susername" placeholder="Username" required>
           </div>
         <div class="field">
-          <input type="text" placeholder="Email Address" required>
+          <input type="email" id="semail" name="semail" placeholder="Email Address" required>
         </div>
         <div class="field">
-          <input type="password" placeholder="Password" required>
+          <input type="text" id="smobile" name="smobile" placeholder="Mobile Number" required>
         </div>
         <div class="field">
-          <input type="password" placeholder="Confirm password" required>
+         
+          <input type="password" id="spassword" name="spassword" placeholder="Password" required>
         </div>
-        <div class="field">
-            <input type="mobilenumber" placeholder="Mobile Number" required>
-          </div>
+       
         <div class="field btn">
           <div class="btn-layer"></div>
-          <input type="submit" value="Signup">
+          <button type="button" onclick="SignUp()">SignUp</button>
         </div>
       </form>
     </div>
@@ -63,18 +62,14 @@
 </div>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
      const loginText = document.querySelector(".title-text .login");
       const loginForm = document.querySelector("form.login");
       const loginBtn = document.querySelector("label.login");
       const signupBtn = document.querySelector("label.signup");
       const signupLink = document.querySelector("form .signup-link a");
-      const redirect=document.getElementById("login");
-      redirect.addEventListener("click", ()=>{
-      
-        window.location.href="home.html";
-
-      });
       signupBtn.onclick = (()=>{
         loginForm.style.marginLeft = "-50%";
         loginText.style.marginLeft = "-50%";
@@ -87,5 +82,34 @@
         signupBtn.click();
         return false;
       });
+      function SignUp(){
+        alert("*")
+        let formData =new FormData();
+        formData.append("susername",$("#susername").val());
+        formData.append("semail",$("#semail").val());
+        formData.append("smobile",$("#smobile").val());
+        formData.append("spassword",$("#spassword").val());
+        $.ajax({
+          type: "POST",
+          url: "/signup",
+          data: formData,
+          encode: true,
+          dataType: 'json',
+          processData: false,
+          contentType: false,
+
+        }).done(function(response){
+          if(response=="Done"){
+            alert("ff");
+            window.location.href="/locationSelection";
+            alert("KK");
+              
+          }
+          else{
+            alert(response);
+          }
+
+        });
+      }
 </script>
 </html>
