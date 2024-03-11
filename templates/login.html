@@ -25,15 +25,14 @@
     <div class="form-inner">
       <form action="select.html" class="login">
         <div class="field">
-          <input type="text" placeholder="Email Address" required>
+          <input type="email" id="lemail" name="lemail" placeholder="Email Address" required>
         </div>
         <div class="field">
-          <input type="password" placeholder="Password" required>
+          <input type="password" id="lpassword" name="lpassword" placeholder="Password" required>
         </div>
-        <div class="pass-link"><a href="#">Forgot password?</a></div>
         <div class="field btn">
           <div class="btn-layer"></div>
-           <input type="submit"  id="login" value="Login">
+          <button type="button" onclick="login()">SignUp</button>
         </div>
         <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
       </form>
@@ -100,10 +99,35 @@
 
         }).done(function(response){
           if(response=="Done"){
-            alert("ff");
+        
             window.location.href="/locationSelection";
-            alert("KK");
+      
               
+          }
+          else{
+            alert(response);
+          }
+
+        });
+      }
+      function login(){
+        let formData = new FormData();
+        formData.append("lemail",$("#lemail").val());
+        formData.append("lpassword",$("#lpassword").val());
+        $.ajax({
+          type: "POST",
+          url: "/login",
+          data: formData,
+          encode: true,
+          dataType: 'json',
+          processData: false,
+          contentType: false,
+
+        }).done(function(response){
+          if(response=="Done"){
+        
+            window.location.href="/locationSelection";
+      
           }
           else{
             alert(response);

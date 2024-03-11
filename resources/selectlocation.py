@@ -39,7 +39,7 @@ def list_cities_in_india():
 cities_in_india=list_cities_in_india()
 
 @router.get("/locationSelection")
-def login_page(request:Request):
+def login_page(request:Request,db:Session=Depends(get_db)):
     login_status=0
     try:
         token = request.session["user"]
@@ -52,5 +52,5 @@ def login_page(request:Request):
         else:
             login_status=1
             return templates.TemplateResponse('select.html', context={'request': request,'cities_in_india':cities_in_india,"login_status":login_status}) 
-    except JWTError:
+    except:
          return templates.TemplateResponse('select.html', context={'request': request,'cities_in_india':cities_in_india,"login_status":login_status}) 

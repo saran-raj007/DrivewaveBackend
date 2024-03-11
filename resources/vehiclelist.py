@@ -18,10 +18,11 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 router.mount("/DrivewaveBackend/templates", StaticFiles(directory="/DrivewaveBackend/templates"), name="templates")
 
-@router.get("/rentalpoints")
-def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:Session=Depends(get_db)):
+@router.get("/vehiclelist")
+def rentalpoints(request:Request,location:str,place:str,starttime:str,endtime:str,vtype:str,db:Session=Depends(get_db)):
     login_status=0
     try:
+       
         token = request.session["user"]
         payload = jwt.decode(token, BaseConfig.SECRET_KEY, algorithms=[BaseConfig.ALGORITHM] )
         username: str= payload.get("user_name")
@@ -31,6 +32,6 @@ def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             login_status=1
-            return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status}) 
+            return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype}) 
     except:
-         return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status}) 
+         return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype}) 

@@ -18,8 +18,9 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 router.mount("/DrivewaveBackend/templates", StaticFiles(directory="/DrivewaveBackend/templates"), name="templates")
 
-@router.get("/rentalpoints")
-def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:Session=Depends(get_db)):
+
+@router.get("/profile")
+def profile(request:Request,db:Session=Depends(get_db)):
     login_status=0
     try:
         token = request.session["user"]
@@ -31,6 +32,7 @@ def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             login_status=1
-            return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status}) 
+            user_datas=db.query(models.User).filter(models.User.Emailid == usermail,models.User.Status=="Active").first()
+            return templates.TemplateResponse('userprofile.html', context={'request': request,"login_status":login_status,"user_datas":user_datas}) 
     except:
-         return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status}) 
+         raise HTTPException(status_code=401,detail="Unauthorized")

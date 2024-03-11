@@ -50,22 +50,26 @@
     <div class="search-box">
         <h1> Self-Drive Vehicle Rentals in {{location}} </h1>
         <h3>Book your drive now!</h3>
+        <form class="needs-validation" novalidate>
         <div class="search-field">
                 
-                <select name="" id="" class="form-control" style="width :250px;">
+                <select name="place" id="place" class="form-control" style="width :250px;" required>
                   <option value="" disabled selected>select location</option>
                   <option value="Bike"> Majestic Bus Stand </option>
                   <option value="Car"> Yeshwanthpur, Bengaluru, Karna... </option>
                 </select>
-                <input type="datetime-local" id="start-time" min="" class="form-control"  placeholder="select pickup and drop time and date">
-                <input type="datetime-local" id="end-time" min="" class="form-control"  placeholder="select pickup and drop time and date">
-                <select name="" id="" class="form-control" style="width :250px;">
+                
+                <input type="datetime-local" id="start-time"  class="form-control"  min=""   placeholder="select pickup and drop time and date" required>
+                <input type="datetime-local" id="end-time"  class="form-control"    min=""  placeholder="select pickup and drop time and date" required>
+                <select name="" id="type" class="form-control" style="width :250px;" required>
                   <option value="" disabled selected>select vehicle type</option>
                   <option value="Bike">Bike</option>
                   <option value="Car">Car</option>
                 </select>
-                <button type="button" id="search">Search</button>
+                <button type="button" id="search" >Search</button>
+              
         </div>
+      </form>
 
     </div>
 
@@ -287,14 +291,12 @@
       document.getElementById('start-time').setAttribute('min', `${currentDate}T${currentTime}`);
       document.getElementById('end-time').setAttribute('min', `${currentDate}T${currentTime}`);
       function validateStartTime() {
+        
         now = new Date();
         var startTime = document.getElementById('start-time').value;
         var parts = startTime.split('T');
         var time = parts[1];
         var currentTime = now.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute: '2-digit'});
-        alert("Y");
-        alert((time));
-        alert((currentTime));
         var [hours1, minutes1] = time.split(':').map(Number);
         var [hours2, minutes2] = currentTime.split(':').map(Number);
     
@@ -312,9 +314,7 @@
         var parts = endTime.split('T');
         var time = parts[1];
         var currentTime = now.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute: '2-digit'});
-        alert("Y");
-        alert((time));
-        alert((currentTime));
+        
         var [hours1, minutes1] = time.split(':').map(Number);
         var [hours2, minutes2] = currentTime.split(':').map(Number);
     
@@ -347,11 +347,37 @@
       }
       const redirect=document.getElementById("search");
       redirect.addEventListener("click", ()=>{
-       // alert("*");
-       // window.location.href="search.html";
+        var flag=0;
+        (() => {
+          'use strict'
+        
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          const forms = document.querySelectorAll('.needs-validation')
+        //  let flag=0;
+          // Loop over them and prevent submission
+          Array.from(forms).forEach(form => {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+                alert("Please enter all details");
+                flag=1;
+              }
+        
+              form.classList.add('was-validated')
+            
+          })
+        })()
+       if(flag==0){
        validateStartTime();
        validateEndTime();
-       validateBothTime();
+      // validateBothTime();
+       let place=document.getElementById("place").value;
+       let starttime=document.getElementById("start-time").value;
+       let endtime=document.getElementById("end-time").value;
+       let type=document.getElementById("type").value;
+      
+       window.location.href="/vehiclelist?location="+ "{{location}}" + "&" + "place=" + place +"&"+ "starttime=" + starttime + "&" + "endtime=" + endtime + "&" + "vtype="+ type ;
+       }
      });
     </script>
 </body>

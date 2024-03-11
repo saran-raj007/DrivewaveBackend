@@ -157,6 +157,45 @@ margin-right: 20px;
 .bg-clr{
   background-color: #46c49e;
 }
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+}
+.dropdown img{
+  border-radius: 50%;
+}
+
+
+.dropbtn {
+
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 80px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 @media (max-width: 768px) {
   .profile-section {
     flex-direction: column;

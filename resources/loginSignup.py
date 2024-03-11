@@ -43,3 +43,21 @@ def logcheck(request:Request,db:Session=Depends(get_db),susername:str=Form(...),
         json_compatible_item_data = jsonable_encoder(error)
         return JSONResponse(content=json_compatible_item_data)
         
+
+@router.post("/login")
+def logcheck(request:Request,db:Session=Depends(get_db),lemail:str=Form(...),lpassword:str=Form(...)):
+    find=db.query(models.User).filter(models.User.Emailid==lemail,models.User.Password==lpassword,models.User.Status=="Active").first()
+    if find is not None:
+        error="Valid Creditional"
+        access_token_expires = timedelta(minutes=BaseConfig.ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(data={"user_name": find.Username,"user_email": find.Emailid},expires_delta=access_token_expires)
+        sessid = access_token
+        request.session["user"] = sessid
+        error= "Done"   
+        json_compatible_item_data = jsonable_encoder(error)
+        return JSONResponse(content=json_compatible_item_data)
+        
+    else:
+        error= "Invalid password or emailid"   
+        json_compatible_item_data = jsonable_encoder(error)
+        return JSONResponse(content=json_compatible_item_data)
