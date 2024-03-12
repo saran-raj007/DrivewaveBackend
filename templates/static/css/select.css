@@ -7,7 +7,7 @@ body {
     justify-content: space-between;
 }
 
-header, footer {
+header,  {
     background-color: #333;
     color: #fff;
     padding: 10px;
@@ -50,10 +50,7 @@ select {
 select:hover {
     background-color: #f9f9f9;
 }
-footer {
-    background-color: #0f0c0c;
-    padding: 20px;
-}
+
 
 .about-us {
     max-width: 800px;
