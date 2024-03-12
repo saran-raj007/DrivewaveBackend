@@ -51,6 +51,7 @@
           <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
             <ol class="breadcrumb mb-0">
               <li class="breadcrumb-item"><a href="#">My Account</a></li>
+              <input type="hidden" id="userid" name="userid" value="{{user_datas.id}}"/>
               
             </ol>
           </nav>
@@ -90,17 +91,18 @@
             </div>
             <div class="signup-deltais py-4">
               <div class="d-flex  user-details ">
+                <span id="err" class="text-danger"></span>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">user Name</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name" value="{{user_datas.Username}}">
+                    <input type="text" class="form-control" id="uname" name="uname" placeholder="Name" value="{{user_datas.Username}}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email" value="{{user_datas.Emailid}}">
+                    <input type="email" class="form-control" id="uemail" name="uemail" placeholder="Email" value="{{user_datas.Emailid}}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Phone number" value="{{user_datas.Phonenumber}}">
+                    <input type="text" class="form-control" id="uphone" name="uphone" placeholder="Phone number" value="{{user_datas.Phonenumber}}">
                   </div>
                   
                 
@@ -113,25 +115,26 @@
             </div>
             <div class="change-password ">
               <div class="d-flex  user-details ">
+                <span id="perr" class="text-danger"></span>
                 <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">Current Password</label>
-                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="current password">
+                  <label for="currpassword" class="form-label">Current Password</label>
+                  <input type="password" class="form-control" id="currpassword" name="currpassword" placeholder="current password">
                 </div>
 
                 <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">New Password</label>
-                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="new password">
+                  <label for="newpassword" class="form-label">New Password</label>
+                  <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="new password">
                 </div>
                 <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">Conform new password</label>
-                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="conform new password">
+                  <label for="connewpassword" class="form-label">Conform new password</label>
+                  <input type="password" class="form-control" id="connewpassword" name="connewpassword" placeholder="conform new password">
                 </div>
 
               
             </div>
           </div>
           <div class="chngpass-btn">
-            <button type="submit">change password</button>
+            <button type="button" onclick="updatePassword()">change password</button>
           </div>
           <hr>
 
@@ -156,9 +159,6 @@
                       <span>Total Price :- </span>
                       <span>₹2070</span>
                     </div>
-                    
-                    
-                    
                    </div>
                  </div>
                </div>
@@ -243,10 +243,9 @@
     </footer>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-FXZ4bcZuS8taQqo8LvE2Duv2ZCf3CeAVpfyp4PJfUI8=" crossorigin="anonymous"></script>
+  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     let firstDiv = document.getElementsByClassName('account-details')[0];
     let secondDiv = document.getElementsByClassName('mybooking')[0];
@@ -262,6 +261,60 @@
         firstDiv.classList.add('d-none');
         secondDiv.classList.remove('d-none');
     });
+    function update(){
+      let formData= new FormData();
+      formData.append("userid",$("#userid").val());
+      formData.append("uname",$("#uname").val());
+      formData.append("uemail",$("#uemail").val());
+      formData.append("uphone",$("#uphone").val());
+      $.ajax({
+        type: "POST",
+        url :'/updateProfile',
+        data: formData,
+        encode: true,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+      }).done(function(response){
+        if(response=="Done"){
+          location.reload();
+        }
+        else{
+          $("#err").text(response);
+        }
+
+      });
+    }
+    function updatePassword(){
+      if(document.getElementById("newpassword").value==document.getElementById("connewpassword").value){
+        let formData = new FormData();
+        formData.append("userid",$("#userid").val());
+        formData.append("currpassword",$("#currpassword").val());
+        formData.append("newpassword",$("#newpassword").val());
+        $.ajax({
+          type: "POST",
+          url :'/updatePassword',
+          data: formData,
+          encode: true,
+          dataType: 'json',
+          processData: false,
+          contentType: false,
+
+        }).done(function(response){
+          if(response=="Done"){
+            location.reload();
+          }
+          else{
+            $("#perr").text(response);
+          }
+
+        });
+
+      }
+      else{
+        alert("new password and conform password should be match");
+      }
+    }
     
   </script>
 

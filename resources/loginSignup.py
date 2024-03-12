@@ -61,3 +61,8 @@ def logcheck(request:Request,db:Session=Depends(get_db),lemail:str=Form(...),lpa
         error= "Invalid password or emailid"   
         json_compatible_item_data = jsonable_encoder(error)
         return JSONResponse(content=json_compatible_item_data)
+
+@router.get("/logout")
+def logout(request:Request):
+    request.session.clear()
+    return RedirectResponse("/locationSelection", status_code=303)
