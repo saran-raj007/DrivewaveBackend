@@ -33,4 +33,14 @@ def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:
             login_status=1
             return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status}) 
     except:
-         return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status}) 
+         return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status})
+
+@router.post("/query_request")
+def queryRequest(request:Request,db:Session=Depends(get_db),emailid:str=Form(...),querycontent:str=Form(...)):
+    query_data=models.Query(Emailid=emailid,Querycontent=querycontent,Status="Active",Created_at=current_datetime)
+    db.add(query_data)
+    db.commit()
+    response="Done"
+    json_compatible_item_data = jsonable_encoder(response)
+    return JSONResponse(content=json_compatible_item_data)
+    

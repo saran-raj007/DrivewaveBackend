@@ -257,17 +257,17 @@
           </div>
           <div class="query-fields">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="area" name="area" placeholder="" required>
+              <input type="email" class="form-control" id="emailid" name="emailid" placeholder="" required>
               <label for="floatingInput">Email</label>
             </div>
             <div class="form-floating mb-3">
-              <textarea class="form-control" placeholder="Leave a comment here" id="query" name="query" rows="8" cols="50" required></textarea>
+              <textarea class="form-control" placeholder="Leave a comment here" id="querycontent" name="querycontent" rows="8" cols="50" required></textarea>
               <label for="floatingInput">Enter your queries</label>
               </div>
 
           </div>
           <div class="query-btn">
-            <button>
+            <button type="button" onclick="queryRequest()">
               submit
             </button>
 
@@ -295,6 +295,7 @@
         </ul>
       </footer>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       var now = new Date();
       const currentDate = now.toISOString().slice(0, 10);
@@ -396,6 +397,26 @@
        }
       }
      });
+     function queryRequest(){
+      let formData =new FormData();
+      formData.append("emailid",$("#emailid").val());
+      formData.append("querycontent",$("#querycontent").val());
+      $.ajax({
+        type: "POST",
+        url : "/query_request",
+        data: formData,
+        encode: true,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+
+      }).done(function(response){
+        if(response=="Done"){
+          location.reload();
+        }
+
+      });
+     }
     </script>
 </body>
 </html>
