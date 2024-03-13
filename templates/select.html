@@ -10,44 +10,41 @@
 </head>
 <body onload="getLocation()">
 
-    <!-- <header>
-        <h1></h1>
-    </header> -->
-    <!--Header-->
-    <header class="p-3 bg-clr text-white">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-              <img src="templates/static/images/logo.png" alt="logo" width="50" height="60" >
-            </a>
-    
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="#" class="nav-link px-2 text-dark">Home</a></li>
-              <!-- <li><a href="#" class="nav-link px-2 text-dark">Features</a></li>
-              <li><a href="#" class="nav-link px-2 text-dark">Pricing</a></li>
-              <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
-              <li><a href="#" class="nav-link px-2 text-dark">About</a></li> -->
-            </ul>
-    
-            <div class="text-end">
-              {%if login_status==0%}
-              <a href="/login" class="btn btn-outline-light me-2">Login/SignUp</a>
-              {%else%}
-              <div class="dropdown">
-                <img src="templates/static/images/profile.png" alt="" width="50" height="50">
-                 <div id="dropdownMenu" class="dropdown-content">
-                     <a href="/profile">Profile</a>
-                     <a href="/logout">Logout</a>
-                 </div>
+   <!--Header-->
+   <header class="p-3 bg-clr text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <img src="templates/static/images/logo.png" alt="logo" width="50" height="60" >
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 text-dark">Home</a></li>
+          <!-- <li><a href="#" class="nav-link px-2 text-dark">Features</a></li>
+          <li><a href="#" class="nav-link px-2 text-dark">Pricing</a></li>
+          <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
+          <li><a href="#" class="nav-link px-2 text-dark">About</a></li> -->
+        </ul>
+
+        <div class="text-end">
+          {%if login_status==0%}
+          <a href="/login" class="btn btn-warning me-2">Login/SignUp</a>
+          {%else%}
+          <div class="dropdown">
+            <img src="templates/static/images/profile.png" alt="" width="50" height="50">
+             <div id="dropdownMenu" class="dropdown-content">
+                 <a href="/profile">Profile</a>
+                 <a href="/logout">Logout</a>
              </div>
-             {%endif%}
-              
-            
-             
-            </div>
-          </div>
+         </div>
+         {%endif%}
+          
+        
+         
         </div>
-    </header>
+      </div>
+    </div>
+</header>
 
     <main>
         <label for="locationDropdown">Please select a location</label>

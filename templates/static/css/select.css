@@ -7,14 +7,16 @@ body {
     justify-content: space-between;
 }
 
-header,  {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
+
+:root{
+    --text: #0d0e0e;
+    --background: #f4f7f9;
+    --primary: #4e95b7;
+    --secondary: #8ac5e2;
+    --accent: #52b8e9;
+    }
 .bg-clr{
-    background-color: #46c49e;
+    background-color: var(--primary);
 }
 main {
     background-image: url('https://c4.wallpaperflare.com/wallpaper/343/838/535/bike-car-ferrari-cars-ferrari-hd-art-wallpaper-preview.jpg');

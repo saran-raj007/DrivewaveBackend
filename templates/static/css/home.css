@@ -3,9 +3,20 @@
     padding: 0px;
     box-sizing: border-box;
     overflow-y: auto;
+
 }
+:root{
+    --text: #0d0e0e;
+    --background: #f4f7f9;
+    --primary: #4e95b7;
+    --secondary: #8ac5e2;
+    --accent: #52b8e9;
+    }
 .bg-clr{
-    background-color: #46c49e;
+    background-color: var(--primary);
+}
+body{
+    background-color: var(--background);
 }
 .search-box{
     height: 90vh;
@@ -31,7 +42,7 @@
 .search-field button{
     border: none;
     padding: 10px;
-    background-color: aquamarine;
+    background-color: var(--secondary);
     border-radius: 10px;
     margin-top: 310px;
 }
@@ -55,13 +66,16 @@
     height: fit-content;
     margin-bottom: -12px;
     padding-bottom: 32px;
-    background-color: burlywood;
+    background-color: var(--background);
 }
 .vehicle-list{
     display: flex;
     justify-content: center;
     gap: 30px;
     padding-top: 30px;
+}
+.vehicle-list .card{
+    background-color: var(--secondary);
 }
 .vehicle-list .card:hover{
     transform: translateY(12px);
@@ -92,13 +106,19 @@
 }
 .review{
     height: 400px;
-    background-color: #46c49e;
+    background-color: var(--background);
+    overflow-y: hidden;
+}
+.review .card{
+    padding-top:-2px;
+    background-color: var(--secondary);
+
 }
 .review-cards{
     display: flex;
     justify-content: center;
     gap :90px;
-    margin-top: 90px;
+    margin-top: 40px;
 }
 .profile-img{
     border: 1px solid black;
@@ -114,19 +134,23 @@
     justify-content: center;
     align-items: center;
     height: 400px;
-    background-color: dimgray;
+    background-color: var(--background);
 }
 
 .query form{
     border: 1px solid black;
     width: 500px;
-    background-color: aliceblue;
+    background-color: var(--secondary);
     height: 300px;
     border-radius: 20px;
 }
 .form-title{
     display: flex;
     justify-content: center;
+    
+}
+.form-title h3{
+    overflow-y: hidden;
 }
 .query-fields{
     padding-left: 90px;
@@ -154,16 +178,20 @@
 .ratring-rides span{
     overflow-y: hidden;
 }
+.sub-title span{
+    
+    background-color: #52b8e9;
+    
+}
 .dropdown {
     position: relative;
     display: inline-block;
-    overflow-x: hidden;
-    overflow-y: hidden;
 
 }
 .dropdown img{
     border-radius: 50%;
 }
+
 
 .dropbtn {
 
@@ -216,7 +244,7 @@
         margin: 0;
         border: none;
         padding: 10px;
-        background-color: aquamarine;
+
         border-radius: 10px;
       
     }
@@ -229,7 +257,7 @@
     }
     .popular{
         height: fit-content;
-        background-color: burlywood;
+        
     }
     .search-box h1{
         
@@ -252,13 +280,16 @@
         
     }
     .review{
-        height: 750px;
-        background-color: #46c49e;
+        height: 950px;
+    
+    }
+    hr{
+        background-color: var(--secondary);
     }
     .review-cards{
         flex-direction: column;
         align-items: center;
-        gap :20px;
+        gap :30px;
         margin-top: 20px;
     }
     .query form{

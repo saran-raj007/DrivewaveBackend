@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="templates/static/css/home.css">
     <title>Document</title>
 </head>
@@ -28,7 +29,7 @@
   
           <div class="text-end">
             {%if login_status==0%}
-            <a href="/login" class="btn btn-outline-light me-2">Login/SignUp</a>
+            <a href="/login" class="btn btn-warning me-2">Login/SignUp</a>
             {%else%}
             <div class="dropdown">
               <img src="templates/static/images/profile.png" alt="" width="50" height="50">
@@ -75,6 +76,9 @@
 
     <!--section-1-->
     <div class="popular">
+      <div class="py-1 px-2">
+        <h1><span class="badge bg-success text-dark">Popular vehicles</span></h1>
+      </div>
         <div class="vehicle-list">
             <div class="card" style="width: 18rem;">
                 <img src="templates/static/images/bike.jpg" class="card-img-top" alt="..." height="200">
@@ -205,35 +209,43 @@
      
 
     </div> -->
+    <hr>
     <!--customer review-->
     <div class="review">
+      <div class="px-2">
+        <h1><span class="badge bg-warning text-dark">customer Reviews</span></h1>
+      </div>
       <div class="review-cards">
         <div class="card" style="width: 18rem;">
           <img src="templates/static/images/profile.png" class="card-img-top profile-img" alt="...">
           <div class="card-body">
-            
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <i class="bi bi-star-fill"></i><span class="px-1">4.5</span>
+            <p class="card-text">Easy to use, competitive prices, wide selection. Excellent customer service, highly recommend!</p>
           </div>
         </div>
 
         <div class="card" style="width: 18rem;">
           <img src="templates/static/images/profile.png" class="card-img-top profile-img" alt="...">
           <div class="card-body">
-            
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <i class="bi bi-star-fill"></i><span class="px-1">4.5</span>
+            <p class="card-text">Hassle-free booking, clean cars, great service. Will use again for sure!</p>
           </div>
         </div>
 
         <div class="card" style="width: 18rem;">
           <img src="templates/static/images/profile.png" class="card-img-top profile-img" alt="...">
           <div class="card-body">
-            
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <i class="bi bi-star-fill"></i><span class="px-1">4.5</span>
+            <p class="card-text">User-friendly, competitive prices, excellent selection. Top-notch customer service, highly recommend!</p>
           </div>
         </div>
 
       </div>
 
+    </div>
+    <hr>
+    <div class="px-2">
+      <h1><span class="badge bg-danger">Query</span></h1>
     </div>
     <!--Query form-->
     <div class="query">
@@ -285,11 +297,11 @@
     </div>
     <script>
       var now = new Date();
-      alert(now);
       const currentDate = now.toISOString().slice(0, 10);
       const currentTime = now.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute: '2-digit'});
       document.getElementById('start-time').setAttribute('min', `${currentDate}T${currentTime}`);
       document.getElementById('end-time').setAttribute('min', `${currentDate}T${currentTime}`);
+      var flag=0;
       function validateStartTime() {
         
         now = new Date();
@@ -322,6 +334,7 @@
         var totalMinutes2 = hours2 * 60 + minutes2;
     
         if (totalMinutes1 < totalMinutes2) {
+          flag=1;
           alert("End time should be greater than current time.");
           document.getElementById('end-time').value = "";
         } 
@@ -341,13 +354,15 @@
       
     
         if ((totalMinutes2-totalMinutes1)<120) {
+          flag=1;
             alert("End time should be at least one hour after start time.");
             document.getElementById('end-time').value = "";
         }
       }
       const redirect=document.getElementById("search");
       redirect.addEventListener("click", ()=>{
-        var flag=0;
+        flag=0;
+        
         (() => {
           'use strict'
         
@@ -371,6 +386,7 @@
        validateStartTime();
        validateEndTime();
       // validateBothTime();
+      if(flag==0){
        let place=document.getElementById("place").value;
        let starttime=document.getElementById("start-time").value;
        let endtime=document.getElementById("end-time").value;
@@ -378,6 +394,7 @@
       
        window.location.href="/vehiclelist?location="+ "{{location}}" + "&" + "place=" + place +"&"+ "starttime=" + starttime + "&" + "endtime=" + endtime + "&" + "vtype="+ type ;
        }
+      }
      });
     </script>
 </body>
