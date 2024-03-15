@@ -306,24 +306,28 @@
       function validateStartTime() {
         
         now = new Date();
+        
         var startTime = document.getElementById('start-time').value;
+        const date1 = new Date(startTime);
         var parts = startTime.split('T');
+     //   var date=parts[0];
         var time = parts[1];
         var currentTime = now.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute: '2-digit'});
         var [hours1, minutes1] = time.split(':').map(Number);
         var [hours2, minutes2] = currentTime.split(':').map(Number);
     
         var totalMinutes1 = hours1 * 60 + minutes1;
-        var totalMinutes2 = hours2 * 60 + minutes2;
-    
-        if (totalMinutes1 < totalMinutes2) {
-          alert("Start time should be greater than current time.");
+        var totalMinutes2 = hours2 * 60 + minutes2+60;
+
+        if (totalMinutes1 < totalMinutes2 &&now==date1) {
+          alert("Start time  atleast one hour greater than current time.");
           document.getElementById('start-time').value = "";
         } 
       }
       function validateEndTime() {
         now = new Date();
         var endTime = document.getElementById('end-time').value;
+        const date1 = new Date(endTime);
         var parts = endTime.split('T');
         var time = parts[1];
         var currentTime = now.toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute: '2-digit'});
@@ -332,9 +336,9 @@
         var [hours2, minutes2] = currentTime.split(':').map(Number);
     
         var totalMinutes1 = hours1 * 60 + minutes1;
-        var totalMinutes2 = hours2 * 60 + minutes2;
+        var totalMinutes2 = hours2 * 60 + minutes2+60;
     
-        if (totalMinutes1 < totalMinutes2) {
+        if (totalMinutes1 < totalMinutes2&&now==date1) {
           flag=1;
           alert("End time should be greater than current time.");
           document.getElementById('end-time').value = "";
@@ -380,7 +384,6 @@
               }
         
               form.classList.add('was-validated')
-            
           })
         })()
        if(flag==0){

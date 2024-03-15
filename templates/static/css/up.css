@@ -204,6 +204,19 @@ margin-right: 20px;
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.stars {
+  display: inline-block;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.stars .star {
+  color: #ccc;
+}
+
+.stars .star.checked {
+  color: #f8d301;
+}
 @media (max-width: 768px) {
   .profile-section {
     flex-direction: column;

@@ -148,7 +148,7 @@
              <div class="card mb-3" style="max-width: 540px;">
                <div class="row g-0">
                  <div class="col-md-4 col-sm-12">
-                   <img src="carr.jpg" class="img-fluid rounded-start crd-img"  alt="...">
+                   <img src="templates/static/images/carr.jpg" class="img-fluid rounded-start crd-img"  alt="...">
                  </div>
                  <div class="col-md-8">
                    <div class="card-body basic-details">
@@ -162,6 +162,11 @@
                       <span>Total Price :- </span>
                       <span>₹2070</span>
                     </div>
+                    <div class="d-flex py-2 gap-4 justify-content-center">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#book1">More Details</button>
+                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#feedback">Feed back</button>
+                    </div>
+                   
                    </div>
                  </div>
                </div>
@@ -169,7 +174,7 @@
              <div class="card mb-3" style="max-width: 540px;">
                <div class="row g-0">
                  <div class="col-md-4">
-                   <img src="car.jpg" class="img-fluid rounded-start crd-img" alt="...">
+                   <img src="templates/static/images/car.jpg" class="img-fluid rounded-start crd-img" alt="...">
                  </div>
                  <div class="col-md-8">
                   <div class="card-body basic-details">
@@ -184,7 +189,10 @@
                      <span>₹2070</span>
                    </div>
                    
-                   
+                   <div class="d-flex py-2 gap-4 justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#book1">More Details</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#feedback">Feed back</button>
+                  </div>
                    
                   </div>
                  </div>
@@ -193,7 +201,7 @@
              <div class="card mb-3" style="max-width: 540px;">
                <div class="row g-0">
                  <div class="col-md-4">
-                   <img src="bike.jpg" class="img-fluid rounded-start crd-img" alt="...">
+                   <img src="templates/static/images/bike.jpg" class="img-fluid rounded-start crd-img" alt="...">
                  </div>
                  <div class="col-md-8">
                   <div class="card-body basic-details">
@@ -208,6 +216,10 @@
                      <span>₹2070</span>
                    </div>
                    
+                   <div class="d-flex py-2 gap-4 justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#book1">More Details</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#feedback">Feed back</button>
+                  </div>
                    
                    
                   </div>
@@ -218,16 +230,98 @@
             </div>
    
          </div>
-      </div>//
+      </div>
      
             
 
         </div>
-         </div>--
+         </div>
         </div>
       </div>
     </div>
   </section>
+  <!-- Details modal -->
+<div class="modal fade text-dark" id="book1" tabindex="-1" aria-labelledby="exampleMalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-dark">
+        <div class="row ">
+          <div class="col-md-4 col-sm-2 mb-3">
+            <strong>Vehicle Name And Model</strong>
+            <span>Toyota Supra</span>
+          </div>
+          <div class="col-md-4 col-sm-2 mb-3">
+            <strong>Specification</strong>
+            <span>Automatic,petrol,5seats</span>
+          </div>
+          <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
+            <strong>Total Cost</strong>
+            <span>₹2070</span>
+          </div>
+          <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
+            <strong>Start Datetime</strong>
+            <span>20/3/2024,8:30 pm</span>
+          </div>
+          <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
+            <strong>End Datetime</strong>
+            <span>23/3/2024,5:30 pm</span>
+          </div>
+          <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
+            <strong>City and Place</strong>
+            <span>Chennai </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Feedback modal -->
+ <div class="modal fade text-dark" id="feedback" tabindex="-1" aria-labelledby="exampleMalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Feedback</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-dark">
+        <form>
+          <div class="form-group">
+          
+            <div class="stars">
+                <span class="star" onclick="rate(1)">&#9734;</span>
+                <span class="star" onclick="rate(2)">&#9734;</span>
+                <span class="star" onclick="rate(3)">&#9734;</span>
+                <span class="star" onclick="rate(4)">&#9734;</span>
+                <span class="star" onclick="rate(5)">&#9734;</span>
+            </div>
+            <input type="hidden" id="rating" name="rating">
+        </div>
+        
+            
+          <div class="form-group review-query">
+            <label for="review">Review:</label>
+            <textarea class="form-control" id="review" name="review" rows="3"></textarea>
+          </div>
+        
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
   <!--Footer-->
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -318,6 +412,17 @@
         alert("new password and conform password should be match");
       }
     }
+    function rate(stars) {
+      document.getElementById('rating').value = stars;
+      var starsSpan = document.querySelectorAll('.stars .star');
+      for (var i = 0; i < starsSpan.length; i++) {
+          if (i < stars) {
+              starsSpan[i].classList.add('checked');
+          } else {
+              starsSpan[i].classList.remove('checked');
+          }
+      }
+  }
     
   </script>
 

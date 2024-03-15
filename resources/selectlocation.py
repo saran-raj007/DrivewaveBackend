@@ -54,3 +54,4 @@ def login_page(request:Request,db:Session=Depends(get_db)):
             return templates.TemplateResponse('select.html', context={'request': request,'cities_in_india':cities_in_india,"login_status":login_status}) 
     except:
          return templates.TemplateResponse('select.html', context={'request': request,'cities_in_india':cities_in_india,"login_status":login_status}) 
+

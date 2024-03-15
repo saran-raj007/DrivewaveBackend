@@ -34,3 +34,21 @@ def rentalpoints(request:Request,db:Session=Depends(get_db)):
             return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status}) 
     except:
          return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status}) 
+     
+
+@router.get("/payment")
+def rentalpoints(request:Request,db:Session=Depends(get_db)):
+    login_status=0
+    try:
+        token = request.session["user"]
+        payload = jwt.decode(token, BaseConfig.SECRET_KEY, algorithms=[BaseConfig.ALGORITHM] )
+        username: str= payload.get("user_name")
+        usermail: str= payload.get("user_email")
+        
+        if username is None or usermail is None:
+            raise HTTPException(status_code=401,detail="Unauthorized")
+        else:
+            login_status=1
+            return templates.TemplateResponse('payment.html', context={'request': request,"login_status":login_status}) 
+    except:
+         return templates.TemplateResponse('payment.html', context={'request': request,"login_status":login_status}) 
