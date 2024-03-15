@@ -16,7 +16,7 @@ from jose import jwt, JWTError
 current_datetime = datetime.utcnow()
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
-router.mount("/DrivewaveBackend/templates", StaticFiles(directory="/DrivewaveBackend/templates"), name="templates")
+router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
 @router.get("/vehiclelist")
 def rentalpoints(request:Request,location:str,place:str,starttime:str,endtime:str,vtype:str,db:Session=Depends(get_db)):
