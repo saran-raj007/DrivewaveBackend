@@ -10,7 +10,7 @@ from models import get_db,models
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from admin.resources.utils import create_access_token
 from starlette.middleware.sessions import SessionMiddleware
-#from jose import jwt, JWTError
+from jose import jwt, JWTError
 current_datetime = datetime.utcnow()
 router = APIRouter()
 templates = Jinja2Templates(directory="admin/templates")
