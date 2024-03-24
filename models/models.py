@@ -22,7 +22,7 @@ class User(Base):
     Password=Column(String(255),nullable=False)
     
     
-    #command columns
+    #comman columns
     Status=Column(String(100),nullable=False)
     Created_at=Column(String(100),nullable=False)
 
@@ -35,7 +35,20 @@ class Query(Base):
   
     
     
-    #command columns
+    #comman columns
+    Status=Column(String(100),nullable=False)
+    Created_at=Column(String(100),nullable=False)
+
+
+class Admin(Base):
+    __tablename__='admin'
+
+    id=Column(Integer,index=True,autoincrement=True, primary_key=True,nullable=False)
+    Username=Column(String(255),nullable=False)
+    Password=Column(String(255),nullable=False)
+
+
+    #comman columns
     Status=Column(String(100),nullable=False)
     Created_at=Column(String(100),nullable=False)
 

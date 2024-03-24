@@ -31,7 +31,6 @@ def list_cities_in_india():
         data = response.json()
         cities=[]
         for city in data.get("geonames", []):
-            
             cities.append(city.get("name"))
         return cities
     else:

@@ -24,6 +24,7 @@ app.add_middleware(
 )
 app.add_middleware(SessionMiddleware, secret_key="e8Lj5R$Zv@n8!sWm3P#q")
 app.mount("/templates", StaticFiles(directory="templates"), name="templates")
+app.mount("/admin/templates", StaticFiles(directory="admin/templates"), name="templates")
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
