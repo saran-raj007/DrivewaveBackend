@@ -52,4 +52,57 @@ class Admin(Base):
     Status=Column(String(100),nullable=False)
     Created_at=Column(String(100),nullable=False)
 
+class Bikes(Base):
+    __tablename__='bikes'
+    
+    id=Column(Integer,index=True,autoincrement=True, primary_key=True,nullable=False)
+    Bikeid=Column(String(255),nullable=False)
+    Bikename_model=Column(String(255),nullable=False)
+    Fueltype=Column(String(255),nullable=False)
+    CostperHR=Column(Integer,nullable=False)
+    Vehicletype=Column(String(255),nullable=False)
+    Cityname=Column(String(255),nullable=False)
+    Location=Column(String(255),nullable=False)
+    Image1=Column(String(255),nullable=False)
+    Image2=Column(String(255),nullable=False)
+    Image3=Column(String(255),nullable=False)
+    Image4=Column(String(255),nullable=False)
+    Starttype=Column(String(255),nullable=False)
+    Ccofthebike=Column(Integer,nullable=False)
+    Mileage=Column(Integer,nullable=False)
+    Nooftrips=Column(Integer,nullable=False)
+    Availablestatus=Column(String(255),nullable=False)
+    
+    
+    #comman columns
+    Status=Column(String(100),nullable=False)
+    Created_at=Column(String(100),nullable=False)
+
+class Cars(Base):
+    
+    __tablename__ = 'cars'
+    
+    id=Column(Integer,index=True,autoincrement=True, primary_key=True,nullable=False)
+    Carid=Column(String(255),nullable=False)
+    Carname_model=Column(String(255),nullable=False)
+    Fueltype=Column(String(255),nullable=False)
+    CostperHR=Column(Integer,nullable=False)
+    Vehicletype=Column(String(255),nullable=False)
+    Cityname=Column(String(255),nullable=False)
+    Location=Column(String(255),nullable=False)
+    Image1=Column(String(255),nullable=False)
+    Image2=Column(String(255),nullable=False)
+    Image3=Column(String(255),nullable=False)
+    Image4=Column(String(255),nullable=False)
+    Transmission=Column(String(255),nullable=False)
+    Seats=Column(String(255),nullable=False)
+    Others=Column(JSON,nullable=False)
+    
+     #comman columns
+    Status=Column(String(100),nullable=False)
+    Created_at=Column(String(100),nullable=False)
+    
+    
+    
+
 Base.metadata.create_all(bind=engine)

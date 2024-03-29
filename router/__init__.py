@@ -7,6 +7,8 @@ from resources.profile import router as profileRouter
 from resources.vehicledetails import router as vehicledetailsRouter
 from admin.resources.login import router as adminloginRouter
 from admin.resources.dashboard import router as dashboardRouter
+from admin.resources.bike import router as bikeRouter
+from admin.resources.car import router as carRouter
 
 router = APIRouter()
 router.include_router(userloginRouter, prefix='', tags=['Login'])
@@ -18,3 +20,5 @@ router.include_router(vehicledetailsRouter, prefix='',tags=['details'])
 
 router.include_router(adminloginRouter, prefix='/admin',tags=['Adminlogin'])
 router.include_router(dashboardRouter, prefix='/admin',tags=['Admindashboard'])
+router.include_router(bikeRouter, prefix='/admin',tags=['Bike'])
+router.include_router(carRouter, prefix='/admin',tags=['Car'])

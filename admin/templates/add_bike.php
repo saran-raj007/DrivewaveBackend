@@ -68,7 +68,7 @@
                                 <div class="input-block">
                                     <label for="guestnumber" class="form-label">City Name</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                        <select class="form-control wide" id="cityname" name="cityname" required>
                                             <option value="" selected disabled>Select city</option>
                                             <option value="Petrol" >Petrol</option>
                                             <option value="Electric" >Electric</option>
@@ -86,7 +86,7 @@
                                 <div class="input-block">
                                     <label for="guestnumber" class="form-label">vehicle Location</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                        <select class="form-control wide" id="location" name="location" required>
                                             <option value="" selected disabled>Select vehicle location</option>
                                             <option value="Petrol" >Petrol</option>
                                             <option value="Electric" >Electric</option>
@@ -189,7 +189,7 @@
                                 <div class="mb-3 col-md-6 col-sm-6">
                                     <label for="product_discription+" class="form-label">start Type</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                        <select class="form-control wide" id="starttype" name="starttype" required>
                                             <option value="" selected disabled>Select start type</option>
                                             <option value="scooter" >Self start</option>
                                             <option value="motorcycle" >Kick start</option>
@@ -211,7 +211,7 @@
                                 </div>
                         </div>
                     </div>
-                    <button type="button" onclick="add_product()" class="btn btn-primary">Submit</button>
+                    <button type="button" onclick="add_bike()" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
@@ -222,25 +222,26 @@
 {% include "include/bottom.php" %}
 <?php require_once 'include/bottom.php'; ?>
 <script type="text/javascript">
-    function add_product(){
+    function add_bike(){
         
       var formData = new FormData();
-      formData.append("productname", $("#productname").val());
-      formData.append("pcategory", $("#pcategory").val());
-      formData.append("quantity", $("#quantity").val());
-      formData.append("price", $("#price").val());
-      formData.append("ptype",$("#ptype").val());
-      formData.append("pimage1", $("#pimage1")[0].files[0]);
-      formData.append("pimage2", $("#pimage2")[0].files[0]);
-      formData.append("pimage3", $("#pimage3")[0].files[0]);
-      formData.append("pimage4", $("#pimage4")[0].files[0]);
-      formData.append("product_discription", $("#product_discription").val());
-      formData.append("product_methodofuse", $("#product_methodofuse").val());
-      formData.append("product_benefits", $("#product_benefits").val());
+      formData.append("bikename", $("#bikename").val());
+      formData.append("bikefuel", $("#bikefuel").val());
+      formData.append("costperhr", $("#costperhr").val());
+      formData.append("vehicletype", $("#vehicletype").val());
+      formData.append("cityname",$("#cityname").val());
+      formData.append("location",$("#location").val());
+      formData.append("bimage1", $("#pimage1")[0].files[0]);
+      formData.append("bimage2", $("#pimage2")[0].files[0]);
+      formData.append("bimage3", $("#pimage3")[0].files[0]);
+      formData.append("bimage4", $("#pimage4")[0].files[0]);
+      formData.append("starttype", $("#starttype").val());
+      formData.append("bikecc", $("#bikecc").val());
+      formData.append("bikemileage", $("#bikemileage").val());
 
       $.ajax({
         type :"POST",
-        url:"/admin/addnew_product",
+        url:"/admin/add_bike",
         data: formData,
         encode: true,
         dataType: 'json',

@@ -6,10 +6,11 @@
     <div class="container-fluid">
         <div class="row guest-database-wrapper">
             <div class="col-12">
+
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Bikes</h4>
-                        <a class="btn btn-primary" type="" href="/add_bikes">Add Bikes</a>
+                        <a class="btn btn-primary" type="" href="/admin/add_bikes">Add Bikes</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -28,53 +29,23 @@
                                 </thead>
                             
                                 <tbody>
+                                    {%for i in bikes%}
                                     <tr>
-                                        <td>1</td>
-                                        <td> Yamaha YZF-R1 2022 </td>
-                                        <td> ₹250 </td>
-                                        <td>4</td>
-                                        <td>Petrol</td>
-                                        <td>Unavailable</td> 
+                                        <td>{{loop.index}}</td>
+                                        <td>{{i.Bikename_model}}</td>
+                                        <td> ₹{{i.CostperHR}} </td>
+                                        <td>{{i.Nooftrips}}</td>
+                                        <td>{{i.Fueltype}}</td>
+                                        <td>{{i.Availablestatus}}</td> 
                                         <td>
                                             <div class="d-flex">
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#listeditem" ><i class="far bi bi-eye-fill"></i></a>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#editpro"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp" onclick="del_conformation()"><i class="fa fa-trash"></i></a>
+                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal"  onclick="view_bike({{i.id}})" ><i class="far bi bi-eye-fill"></i></a>
+                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal"  onclick="edit_bike({{i.id}})"><i class="fas fa-pencil-alt"></i></a>
+                                                <a href="#" class="btn btn-danger shadow btn-xs sharp" onclick="del_conformation({{i.id}})"><i class="fa fa-trash"></i></a>
                                             </div>												
                                         </td>												
                                     </tr>
-                                    <!-- <tr>
-                                        <td>2</td>
-                                        <td>Guava Leaf Powder</td>
-                                        <td>Health care</td>
-                                        <td>₹140</td>
-                                        <td><a href="javascript:void(0);"><strong>--</strong></a></td>
-                                        <td>10</td>
-                                        
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#listeditem"><i class="far fa-clipboard"></i></a>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#guestadd"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp delete-guest"><i class="fa fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Guava Leaf Powder</td>
-                                        <td>Health care</td>
-                                        <td>₹140</td>
-                                        <td><a href="javascript:void(0);"><strong>--</strong></a></td>
-                                        <td>10</td>
-                                    
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#listeditem"><i class="far fa-clipboard"></i></a>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#editpro"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp delete-guest"><i class="fa fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr> -->
+                                    {% endfor %}
                                 </tbody>
                             
                             </table>
@@ -100,6 +71,7 @@
             <div class="modal-body">
             <form>
                 <div class="guest-information-area">
+                    <input type="hidden" id="edit_id" name="edit_id" />
                     <h4>Bike Information</h4>
                     <span id="errmsg"></span>
                     <div class="row">
@@ -108,7 +80,7 @@
                                 <label for="guestsub" class="form-label">Bike Name and model</label>
                                 <div class="input-text">
         
-                                    <input type="text" class="form-control" id="bikename" name="bikename" placeholder="Bike Name and model" required>
+                                    <input type="text" class="form-control" id="edit_bikename" name="edit_bikename" placeholder="Bike Name and model" required>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +88,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Fuel type</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                    <select class="form-control wide" id="edit_bikefuel" name="edit_bikefuel" required>
                                         <option value="" selected disabled>Select Fuel type</option>
                                         <option value="Petrol" >Petrol</option>
                                         <option value="Electric" >Electric</option>
@@ -133,14 +105,14 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="input-block">
                                 <label for="guestemail" class="form-label">Cost pre/Hr</label>
-                                <input type="number" class="form-control" name="costperhr" min="0" id="costperhr" placeholder="cost per/hr" required>
+                                <input type="number" class="form-control" name="edit_costperhr" min="0" id="edit_costperhr" placeholder="cost per/hr" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Vehicle type</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                    <select class="form-control wide" id="edit_vehicletype" name="edit_vehicletype" required>
                                         <option value="" selected disabled>Select Vehicle type</option>
                                         <option value="scooter" >scooter</option>
                                         <option value="motorcycle" >motorcycle</option>
@@ -157,7 +129,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">City Name</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                    <select class="form-control wide" id="edit_city" name="edit_city" required>
                                         <option value="" selected disabled>Select city</option>
                                         <option value="Petrol" >Petrol</option>
                                         <option value="Electric" >Electric</option>
@@ -175,7 +147,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">vehicle Location</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                    <select class="form-control wide" id="edit_location" name="edit_location" required>
                                         <option value="" selected disabled>Select vehicle location</option>
                                         <option value="Petrol" >Petrol</option>
                                         <option value="Electric" >Electric</option>
@@ -190,18 +162,7 @@
                             </div>
                         </div>
                        
-                        <!-- <div class="col-md-6">
-                            <div class="input-block">
-                                <label for="offer" class="form-label">Offers</label>
-                                <select class="default-select form-control wide" name="offer" id="offer">
-                                    <option selected>Select offer</option>
-                                    <option value="10">10%</option>
-                                    <option value="25">25%</option>
-                                    <option value="50">50%</option>
-                                    <option value="100">100%</option>
-                                </select>
-                            </div>
-                        </div> -->
+                     
                        
                     </div>
                 </div>
@@ -220,8 +181,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 1<span class="text-danger">*</span></p>
-                                                            <label for="pimage1" class="form-label"><img id="addoutput" src="templates/images/profile/profile1.png"></label>
-                                                        <input type="file" accept="image/*" name="pimage1" id="pimage1" oninput="addoutput.src=window.URL.createObjectURL(this.files[0])" required>
+                                                            <label for="pimage1" class="form-label"><img id="editbikimg1" src="templates/images/profile/profile1.png"></label>
+                                                        <input type="file" accept="image/*" name="pimage1" id="pimage1" oninput="editbikimg1.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                     
                                                 </div>
@@ -234,8 +195,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 2<span class="text-danger">*</span></p>
-                                                        <label for="pimage2" class="form-label"><img id="addoutput1" src="templates/images/profile/profile1.png"></label>
-                                                        <input type="file" accept="image/*" name="pimage2" id="pimage2" oninput="addoutput1.src=window.URL.createObjectURL(this.files[0])" required>
+                                                        <label for="pimage2" class="form-label"><img id="editbikimg2" src="templates/images/profile/profile1.png"></label>
+                                                        <input type="file" accept="image/*" name="pimage2" id="pimage2" oninput="editbikimg2.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                     
                                                 </div>
@@ -248,8 +209,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 3<span class="text-danger">*</span></p>
-                                                        <label for="pimage3" class="form-label"><img id="addoutput2" src="templates/images/profile/profile1.png"></label>
-                                                        <input type="file" accept="image/*" name="pimage3" id="pimage3" oninput="addoutput2.src=window.URL.createObjectURL(this.files[0])" required>
+                                                        <label for="pimage3" class="form-label"><img id="editbikimg3" src="templates/images/profile/profile1.png"></label>
+                                                        <input type="file" accept="image/*" name="pimage3" id="pimage3" oninput="editbikimg3.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                     
                                                 </div>
@@ -262,8 +223,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 4<span class="text-danger">*</span></p>
-                                                        <label for="pimage4" class="form-label"><img id="addoutput3" src="templates/images/profile/profile1.png"></label>
-                                                        <input type="file" accept="image/*" name="pimage4" id="pimage4" oninput="addoutput3.src=window.URL.createObjectURL(this.files[0])" required>
+                                                        <label for="pimage4" class="form-label"><img id="editbikimg4" src="templates/images/profile/profile1.png"></label>
+                                                        <input type="file" accept="image/*" name="pimage4" id="pimage4" oninput="editbikimg4.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -278,7 +239,7 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_discription+" class="form-label">start Type</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                    <select class="form-control wide" id="edit_starttype" name="edit_starttype" required>
                                         <option value="" selected disabled>Select start type</option>
                                         <option value="scooter" >Self start</option>
                                         <option value="motorcycle" >Kick start</option>
@@ -290,16 +251,16 @@
                               </div>
                               <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_methodOfUse" class="form-label">CC of the Bike</label>
-                                  <input type="number" min="50" id="bikecc" class="form-control" name="bikecc" placeholder="Bike cc"/>
+                                  <input type="number" min="50" id="edit_bikecc" class="form-control" name="edit_bikecc" placeholder="Bike cc"/>
                               </div>
                               <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_methodOfUse" class="form-label">Mileage</label>
-                                  <input type="number" min="10" id="bikemileage" class="form-control" name="bikemileage" placeholder="Bike Mileage"/>
+                                  <input type="number" min="10" id="edit_bikemileage" class="form-control" name="edit_bikemileage" placeholder="Bike Mileage"/>
                               </div>
                               
                             </div>
                     </div>
-                    <button type="button" onclick="add_product()" class="btn btn-primary">Submit</button>
+                    <button type="button" onclick="update_bike()" class="btn btn-primary">Submit</button>
                 </div>
                 
                     
@@ -337,7 +298,7 @@
                             <div class="input-block">
                                 <label for="guestsub" class="form-label">Bike Name and model</label>
                                 <div class="input-text">
-                                   <span>Yamaha YZF-R1 2022</span>
+                                   <span id="vbikename">Yamaha YZF-R1 2022</span>
                                   
                                 </div>
                             </div>
@@ -346,7 +307,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Fuel type</label>
                                 <div class="input-text">
-                                    <span>Petrol</span>
+                                    <span id="vfuel">Petrol</span>
                                </div>
                                 
                             </div>
@@ -355,14 +316,14 @@
                             <label for="guestemail" class="form-label">Cost pre/Hr</label>
                             <div class="input-block">
                                 
-                                <span>₹250</span>
+                                <span id="vcost">₹250</span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Vehicle type</label>
                                 <div class="input-text">
-                                    <span>Motor cycle</span>
+                                    <span id="vvtype">Motor cycle</span>
                                </div>
                                 
                             </div>
@@ -371,7 +332,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">City Name</label>
                                 <div class="input-text">
-                                    <span>Chennai</span>
+                                    <span id="vcity">Chennai</span>
                                </div>
                                 
                             </div>
@@ -380,7 +341,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">vehicle Location</label>
                                 <div class="input-text">
-                                    <span>Chennai Central Railway Station</span>
+                                    <span id="vlocation">Chennai Central Railway Station</span>
                                </div>
                                 
                             </div>
@@ -404,7 +365,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 1<span class="text-danger">*</span></p>
-                                                            <label for="pimage1" class="form-label"><img id="addoutput" src="templates/images/profile/profile1.png"></label>
+                                                            <label for="pimage1" class="form-label"><img id="vbikeimg1" src="templates/images/profile/profile1.png"></label>
                                                     
                                                     </div>
                                                     
@@ -418,7 +379,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 2<span class="text-danger">*</span></p>
-                                                        <label for="pimage2" class="form-label"><img id="addoutput1" src="templates/images/profile/profile1.png"></label>
+                                                        <label for="pimage2" class="form-label"><img id="vbikeimg2" src="templates/images/profile/profile1.png"></label>
                                                     
                                                     </div>
                                                     
@@ -432,7 +393,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 3<span class="text-danger">*</span></p>
-                                                        <label for="pimage3" class="form-label"><img id="addoutput2" src="templates/images/profile/profile1.png"></label>
+                                                        <label for="pimage3" class="form-label"><img id="vbikeimg3" src="templates/images/profile/profile1.png"></label>
                                                         
                                                     </div>
                                                     
@@ -446,7 +407,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 4<span class="text-danger">*</span></p>
-                                                        <label for="pimage4" class="form-label"><img id="addoutput3" src="templates/images/profile/profile1.png"></label>
+                                                        <label for="pimage4" class="form-label"><img id="vbikeimg4" src="templates/images/profile/profile1.png"></label>
                                                         
                                                     </div>
                                                 </div>
@@ -462,19 +423,19 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_discription+" class="form-label">start Type</label>
                                 <div class="input-text">
-                                    <span>Self start</span>
+                                    <span id="vstart">Self start</span>
                                </div>
                               </div>
                               <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_methodOfUse" class="form-label">Bike CC</label>
                                 <div class="input-text">
-                                <span>998cc</span>
+                                <span id="vbikrcc">998cc</span>
                                 </div>
                               </div>
                               <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_methodOfUse" class="form-label">Mileage</label>
                                 <div class="input-text">
-                                  <span>20 km</span>
+                                  <span id="vmileage">20 km</span>
                                 </div>
                               </div>
                               
@@ -512,10 +473,10 @@
 <?php require_once 'include/bottom.php'; ?>
 
 <script type="text/javascript">
-    function product_view(id){
+    function view_bike(id){
         $.ajax({
             type : "PUT",
-            url : "/admin/view_product/"+ id,
+            url : "/admin/view_bike/"+ id,
             id : id,
             encode: true,
             dataType: 'json',
@@ -523,65 +484,66 @@
             contentType: false,
 
         }).done(function(data){
-            var image_path1 = "htdocs/product_image/" + data.product_image1;
-            var image_path2 = "htdocs/product_image/" + data.product_image2;
-            var image_path3 = "htdocs/product_image/" + data.product_image3;
-            var image_path4 = "htdocs/product_image/" + data.product_image4;
-            $("#vproductname").html(data.product_name);
-            $("#vproductcategory").html(data.product_category);
-            $("#vproductprice").html(data.product_price);
-            $("#vproductquantity").html(data.product_quantity);
-            $("#vproducttype").html(data.product_type);
-            $("#vproductoffer").html(data.product_offer);
-            $("#vproductimg1").attr("src", image_path1);
-            $("#vproductimg2").attr("src", image_path2);
-            $("#vproductimg3").attr("src", image_path3);
-            $("#vproductimg4").attr("src", image_path4);
-            $("#vproductdis").html(data.product_description);
-            $("#vproductmeth").html(data.method_of_use);
-            $("#vproductben").html(data.benefits);
+            var image_path1 = "/admin/templates/bike_images/" + data.Image1;
+            var image_path2 = "/admin/templates/bike_images/" + data.Image2;
+            var image_path3 = "/admin/templates/bike_images/" + data.Image3;
+            var image_path4 = "/admin/templates/bike_images/" + data.Image4;
+            $("#vbikename").html(data.Bikename_model);
+            $("#vfuel").html(data.Fueltype);
+            $("#vcost").html(data.CostperHR);
+            $("#vvtype").html(data.Vehicletype);
+            $("#vcity").html(data.Cityname);
+            $("#vlocation").html(data.Location);
+            $("#vbikeimg1").attr("src", image_path1);
+            $("#vbikeimg2").attr("src", image_path2);
+            $("#vbikeimg3").attr("src", image_path3);
+            $("#vbikeimg4").attr("src", image_path4);
+            $("#vstart").html(data.Starttype);
+            $("#vbikrcc").html(data.Ccofthebike);
+            $("#vmileage").html(data.Mileage);
             $("#listeditem").modal('show');
 
 
         });
     }
-    function edit_product(id){
+    function edit_bike(id){
         $.ajax({
             type : 'PUT',
-            url :'/admin/view_product/'+ id,
+            url :'/admin/view_bike/'+ id,
             id :id ,
             encode: true,
             dataType: 'json',
             processData: false,
             contentType: false,
         }).done(function(data){
-            var image_path1 = "htdocs/product_image/" + data.product_image1;
-            var image_path2 = "htdocs/product_image/" + data.product_image2;
-            var image_path3 = "htdocs/product_image/" + data.product_image3;
-            var image_path4 = "htdocs/product_image/" + data.product_image4;
-            $("#edit_proid").val(data.product_id);
-            $("#edit_productname").val(data.product_name);
-            $("#edit_productcategory").val(data.product_category);
-            $("#edit_productprice").val(data.product_price);
-            $("#edit_quantity").val(data.product_quantity);
-            $("#edit_ptype").val(data.product_type);
-            $("#editproimg1").attr("src", image_path1);
-            $("#editproimg2").attr("src", image_path2);
-            $("#editproimg3").attr("src", image_path3);
-            $("#editproimg4").attr("src", image_path4);
-            $("#edit_productdis").val(data.product_description);
-            $("#edit_productmeth").val(data.method_of_use);
-            $("#edit_productben").val(data.benefits);
+            var image_path1 = "/admin/templates/bike_images/" + data.Image1;
+            var image_path2 = "/admin/templates/bike_images/" + data.Image2;
+            var image_path3 = "/admin/templates/bike_images/" + data.Image3;
+            var image_path4 = "/admin/templates/bike_images/" + data.Image4;
+            $("#edit_id").val(data.id);
+            $("#edit_bikename").val(data.Bikename_model);
+            $("#edit_bikefuel").val(data.Fueltype);
+            $("#edit_costperhr").val(data.CostperHR);
+            $("#edit_vehicletype").val(data.Vehicletype);
+            $("#edit_city").val(data.Cityname);
+            $("#edit_location").val(data.Location);
+            $("#editbikimg1").attr("src", image_path1);
+            $("#editbikimg2").attr("src", image_path2);
+            $("#editbikimg3").attr("src", image_path3);
+            $("#editbikimg4").attr("src", image_path4);
+            $("#edit_starttype").val(data.Starttype);
+            $("#edit_bikecc").val(data.Ccofthebike);
+            $("#edit_bikemileage").val(data.Mileage);
             $("#editpro").modal('show');
 
         });
     }
-    function update_product() {
-        var imageUrl1 = document.getElementById('editproimg1').src;
-        var imageUrl2 = document.getElementById('editproimg2').src;
-        var imageUrl3 = document.getElementById('editproimg3').src;
-        var imageUrl4 = document.getElementById('editproimg4').src;
-        alert(imageUrl1);
+    function update_bike() {
+        var imageUrl1 = document.getElementById('editbikimg1').src;
+        var imageUrl2 = document.getElementById('editbikimg2').src;
+        var imageUrl3 = document.getElementById('editbikimg3').src;
+        var imageUrl4 = document.getElementById('editbikimg4').src;
+       
         // var img1;
         // fetch(imageUrl2)
         //     .then(response => response.blob())
@@ -604,20 +566,21 @@
 
           
         var formData = new FormData();
-        formData.append("edit_proid", $("#edit_proid").val());
-        formData.append("edit_productname", $("#edit_productname").val());
-        formData.append("edit_productcategory", $("#edit_productcategory").val());
-        formData.append("edit_productprice", $("#edit_productprice").val());
-        formData.append("edit_productquantity",$("#edit_quantity").val());
-        formData.append("edit_ptype",$("#edit_ptype").val());
-        formData.append("edit_productdis", $("#edit_productdis").val());
-        formData.append("edit_productmeth", $("#edit_productmeth").val());
-        formData.append("edit_productben", $("#edit_productben").val());
-        formData.append("edit_proimg1", blob);
-        formData.append("edit_proimg2", blob1);
-        formData.append("edit_proimg3", blob2);
-        formData.append("edit_proimg4", blob3);
-        alert(formData.edit_proimg1);
+        formData.append("edit_id", $("#edit_id").val());
+        formData.append("edit_bikename", $("#edit_bikename").val());
+        formData.append("edit_bikefuel", $("#edit_bikefuel").val());
+        formData.append("edit_costperhr", $("#edit_costperhr").val());
+        formData.append("edit_vehicletype",$("#edit_vehicletype").val());
+        formData.append("edit_city",$("#edit_city").val());
+        formData.append("edit_location", $("#edit_location").val());
+        formData.append("edit_starttype", $("#edit_starttype").val());
+        formData.append("edit_bikecc", $("#edit_bikecc").val());
+        formData.append("edit_bikemileage", $("#edit_bikemileage").val());
+        formData.append("edit_bikimg1", blob);
+        formData.append("edit_bikimg2", blob1);
+        formData.append("edit_bikimg3", blob2);
+        formData.append("edit_bikimg4", blob3);
+       
         
 
         
@@ -626,7 +589,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/admin/update_product',
+            url: '/admin/update_bike',
             data: formData,
             encode: true,
             dataType: 'json',
@@ -653,8 +616,8 @@
         var id = document.getElementById('delid').value;
         alert(id);
         $.ajax( {
-            type    : "get",
-            url     : '/admin/delete_product/'+id,
+            type    : "put",
+            url     : '/admin/delete_bike/'+id,
             id    : id,
             contentType: "application/json",
             success: function(data) {

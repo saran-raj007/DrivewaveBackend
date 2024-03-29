@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Cars</h4>
-                        <a class="btn btn-primary" type="" href="/add_cars">Add Cars</a>
+                        <a class="btn btn-primary" type="" href="/admin/add_cars">Add Cars</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

@@ -10,7 +10,7 @@ from models import get_db,models
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from admin.resources.utils import create_access_token
 from starlette.middleware.sessions import SessionMiddleware
-#from jose import jwt, JWTError
+from jose import jwt, JWTError
 current_datetime = datetime.utcnow()
 router = APIRouter()
 templates = Jinja2Templates(directory="admin/templates")
@@ -28,6 +28,6 @@ def logincheck(request:Request,db:Session=Depends(get_db),user_name:str=Form(...
         return templates.TemplateResponse('login.php',context={'request':request,'error':error})
     else:
         access_token_expires=timedelta(minutes=BaseConfig.ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token=create_access_token(data={"user_name":find.Username},expire_delta=access_token_expires)
+        access_token=create_access_token(data={"user_name":find.Username},expires_delta=access_token_expires)
         request.session["admin"]=access_token
         return RedirectResponse('/admin/dashboard',status_code=303)

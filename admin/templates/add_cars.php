@@ -19,7 +19,7 @@
                                     <label for="guestsub" class="form-label">Car Name and model</label>
                                     <div class="input-text">
             
-                                        <input type="text" class="form-control" id="bikename" name="bikename" placeholder="Car Name and model" required>
+                                        <input type="text" class="form-control" id="carname" name="carname" placeholder="Car Name and model" required>
                                     </div>
                                 </div>
                             </div>
@@ -32,9 +32,7 @@
                                             <option value="Petrol" >Petrol</option>
                                             <option value="Diesel" >Diesel</option>
                                             <option value="Electric" >Electric</option>
-                                            {% for i in category%}
-                                            <option value="{{i.cat_name}}">{{i.cat_name}}</option>
-                                            {% endfor %}
+                                            
                                         </select>
                                    </div>
                                     
@@ -102,18 +100,7 @@
                                     
                                 </div>
                            
-                            <!-- <div class="col-md-6">
-                                <div class="input-block">
-                                    <label for="offer" class="form-label">Offers</label>
-                                    <select class="default-select form-control wide" name="offer" id="offer">
-                                        <option selected>Select offer</option>
-                                        <option value="10">10%</option>
-                                        <option value="25">25%</option>
-                                        <option value="50">50%</option>
-                                        <option value="100">100%</option>
-                                    </select>
-                                </div>
-                            </div> -->
+                           
                            
                         </div>
                     </div>
@@ -190,7 +177,7 @@
                                 <div class="mb-3 col-md-6 col-sm-6">
                                     <label for="product_discription+" class="form-label">Transmission</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                        <select class="form-control wide" id="transmission" name="transmission" required>
                                             <option value="" selected disabled>Select Transmission type</option>
                                             <option value="scooter" >Manual</option>
                                             <option value="motorcycle" >Automatic</option>
@@ -203,7 +190,7 @@
                                   <div class="mb-3 col-md-6 col-sm-6">
                                     <label for="product_methodOfUse" class="form-label">Seats</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                        <select class="form-control wide" id="seats" name="seats" required>
                                             <option value="" selected disabled>Select Seats</option>
                                             <option value="scooter"> 4/5 seater</option>
                                             <option value="motorcycle"> 6/7 seater</option>                                            
@@ -217,37 +204,37 @@
                                     <label>2 Front Airbags</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="musicsystem" name="musicsystem"/>
                                     <label>Music System</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="usbcharger" name="usbcharger"/>
                                     <label> USB charger</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="powersteering" name="powersteering"/>
                                     <label> Power steering</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="airconditioning" name="airconditioning"/>
                                     <label>Air Conditioning</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="toolkit" name="toolkit"/>
                                     <label> Toolkit</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="reversecam" name="reversecam"/>
                                     <label>  Reverse Camera</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="sparetyre" name="sparetyre"/>
                                     <label>Spare Tyre</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button type="button" onclick="add_product()" class="btn btn-primary">Submit</button>
+                    <button type="button" onclick="add_car()" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
@@ -258,7 +245,7 @@
 {% include "include/bottom.php" %}
 <?php require_once 'include/bottom.php'; ?>
 <script type="text/javascript">
-    function add_product(){
+    function add_car(){
         
       var formData = new FormData();
       formData.append("productname", $("#productname").val());

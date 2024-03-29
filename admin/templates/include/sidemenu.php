@@ -90,15 +90,15 @@
 					 <g>
                      </g>
 					 <g>
-                     </g>
+                     </g>	
 					 <g>
                      </g>
 				    </svg>
 						<span class="nav-text">Vehicle Manager</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="/bike" title="bike">Bikes</a></li>
-						<li><a href="/car" title="car">Cars</a></li>
+						<li><a href="/admin/bike" title="bike">Bikes</a></li>
+						<li><a href="/admin/car" title="car">Cars</a></li>
 					</ul>
 				</li>
 				<li>
