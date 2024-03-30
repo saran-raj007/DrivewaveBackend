@@ -97,6 +97,8 @@ class Cars(Base):
     Transmission=Column(String(255),nullable=False)
     Seats=Column(String(255),nullable=False)
     Others=Column(JSON,nullable=False)
+    Nooftrips=Column(Integer,nullable=False)
+    Availablestatus=Column(String(255),nullable=False)
     
      #comman columns
     Status=Column(String(100),nullable=False)

@@ -68,7 +68,7 @@
                                 <div class="input-block">
                                     <label for="guestnumber" class="form-label">City Name</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                        <select class="form-control wide" id="cityname" name="cityname" required>
                                             <option value="" selected disabled>Select city</option>
                                             <option value="Petrol" >Petrol</option>
                                             <option value="Electric" >Electric</option>
@@ -86,7 +86,7 @@
                                 <div class="input-block">
                                     <label for="guestnumber" class="form-label">vehicle Location</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                        <select class="form-control wide" id="location" name="location" required>
                                             <option value="" selected disabled>Select vehicle location</option>
                                             <option value="Petrol" >Petrol</option>
                                             <option value="Electric" >Electric</option>
@@ -179,8 +179,8 @@
                                     <div class="input-text">
                                         <select class="form-control wide" id="transmission" name="transmission" required>
                                             <option value="" selected disabled>Select Transmission type</option>
-                                            <option value="scooter" >Manual</option>
-                                            <option value="motorcycle" >Automatic</option>
+                                            <option value="Manual" >Manual</option>
+                                            <option value="Automatic" >Automatic</option>
                                             
                                             
                                             
@@ -192,43 +192,43 @@
                                     <div class="input-text">
                                         <select class="form-control wide" id="seats" name="seats" required>
                                             <option value="" selected disabled>Select Seats</option>
-                                            <option value="scooter"> 4/5 seater</option>
-                                            <option value="motorcycle"> 6/7 seater</option>                                            
+                                            <option value="4/5 seater"> 4/5 seater</option>
+                                            <option value="6/7 seater"> 6/7 seater</option>                                            
                                         </select>
                                    </div>
                                   </div>  
                                
                                 <h5><strong>Others</strong></h5>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airbags" name="airbags"/>
+                                    <input type="checkbox" id="airbags" name="airbags" value="Air bags"/>
                                     <label>2 Front Airbags</label>
-                                </div>
+                                </div>  
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="musicsystem" name="musicsystem"/>
+                                    <input type="checkbox" id="musicsystem" name="musicsystem" value="Music System"/>
                                     <label>Music System</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="usbcharger" name="usbcharger"/>
+                                    <input type="checkbox" id="usbcharger" name="usbcharger" value="Usb charger"/>
                                     <label> USB charger</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="powersteering" name="powersteering"/>
+                                    <input type="checkbox" id="powersteering" name="powersteering" value="Power Streering"/>
                                     <label> Power steering</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="airconditioning" name="airconditioning"/>
+                                    <input type="checkbox" id="airconditioning" name="airconditioning" value="Air Conditioning"/>
                                     <label>Air Conditioning</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="toolkit" name="toolkit"/>
+                                    <input type="checkbox" id="toolkit" name="toolkit" value="Tool kit"/>
                                     <label> Toolkit</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="reversecam" name="reversecam"/>
+                                    <input type="checkbox" id="reversecam" name="reversecam" value="Reverse Camera"/>
                                     <label>  Reverse Camera</label>
                                 </div>
                                 <div class="mb-3 col-md-3 col-sm-2">
-                                    <input type="checkbox" id="sparetyre" name="sparetyre"/>
+                                    <input type="checkbox" id="sparetyre" name="sparetyre" value="Spare tyre"/>
                                     <label>Spare Tyre</label>
                                 </div>
                             </div>
@@ -248,22 +248,35 @@
     function add_car(){
         
       var formData = new FormData();
-      formData.append("productname", $("#productname").val());
-      formData.append("pcategory", $("#pcategory").val());
-      formData.append("quantity", $("#quantity").val());
-      formData.append("price", $("#price").val());
-      formData.append("ptype",$("#ptype").val());
-      formData.append("pimage1", $("#pimage1")[0].files[0]);
-      formData.append("pimage2", $("#pimage2")[0].files[0]);
-      formData.append("pimage3", $("#pimage3")[0].files[0]);
-      formData.append("pimage4", $("#pimage4")[0].files[0]);
-      formData.append("product_discription", $("#product_discription").val());
-      formData.append("product_methodofuse", $("#product_methodofuse").val());
-      formData.append("product_benefits", $("#product_benefits").val());
+      formData.append("carname", $("#carname").val());
+      formData.append("carfuel", $("#carfuel").val());
+      formData.append("costperhr", $("#costperhr").val());
+      formData.append("vehicletype", $("#vehicletype").val());
+      formData.append("cityname",$("#cityname").val());
+      formData.append("location",$("#location").val());
+      formData.append("cimage1", $("#pimage1")[0].files[0]);
+      formData.append("cimage2", $("#pimage2")[0].files[0]);
+      formData.append("cimage3", $("#pimage3")[0].files[0]);
+      formData.append("cimage4", $("#pimage4")[0].files[0]);
+      formData.append("transmission", $("#transmission").val());
+      formData.append("seats", $("#seats").val());
+      others=[];
+      var ids=["airbags","musicsystem","usbcharger","powersteering","airconditioning","toolkit","reversecam","sparetyre"];
+        var others = [];
+
+        for (var i = 0; i < ids.length; i++) {
+            if (document.getElementById(ids[i]).checked) {
+                others.push(document.getElementById(ids[i]).value);
+            }
+        }
+
+        formData.append("others", others);
+        console.log(others);
+
 
       $.ajax({
         type :"POST",
-        url:"/admin/addnew_product",
+        url:"/admin/add_car",
         data: formData,
         encode: true,
         dataType: 'json',

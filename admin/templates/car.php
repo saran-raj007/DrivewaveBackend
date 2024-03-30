@@ -29,53 +29,24 @@
                                 </thead>
                                 
                                 <tbody>
+                                    {%for i in cars%}
                                     <tr>
-                                        <td>1</td>
-                                        <td> Ford Mustang GT</td>
-                                        <td>₹ 550</td>
-                                        <td>3</td>
-                                        <td>Diesel</td>
-                                        <td>Available</td> 
+                                        <td>{{loop.index}}</td>
+                                        <td>{{i.Carname_model}}</td>
+                                        <td>₹ {{i.CostperHR}}</td>
+                                        <td>{{i.Nooftrips}}</td>
+                                        <td>{{i.Fueltype}}</td>
+                                        <td>{{i.Availablestatus}}</td> 
                                         <td>
                                             <div class="d-flex">
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button"   ><i class="far bi bi-eye-fill"></i></a>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#editpro" ><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp" ><i class="fa fa-trash"></i></a>
+                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" onclick="view_car({{i.id}})"   ><i class="far bi bi-eye-fill"></i></a>
+                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" onclick="edit_car({{i.id}})" ><i class="fas fa-pencil-alt"></i></a>
+                                                <a href="#" class="btn btn-danger shadow btn-xs sharp" onclick="del_conformation({{i.id}})" ><i class="fa fa-trash"></i></a>
                                             </div>												
                                         </td>												
                                     </tr>
-                                    <!-- <tr>
-                                        <td>2</td>
-                                        <td>Guava Leaf Powder</td>
-                                        <td>Health care</td>
-                                        <td>₹140</td>
-                                        <td><a href="javascript:void(0);"><strong>--</strong></a></td>
-                                        <td>10</td>
-                                        
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#listeditem"><i class="far fa-clipboard"></i></a>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#guestadd"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp delete-guest"><i class="fa fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Guava Leaf Powder</td>
-                                        <td>Health care</td>
-                                        <td>₹140</td>
-                                        <td><a href="javascript:void(0);"><strong>--</strong></a></td>
-                                        <td>10</td>
-                                    
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#listeditem"><i class="far fa-clipboard"></i></a>
-                                                <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#editpro"><i class="fas fa-pencil-alt"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp delete-guest"><i class="fa fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr> -->
+                                    {% endfor%}
+                                   
                                 </tbody>
                                 
                             </table>
@@ -103,13 +74,14 @@
                 <div class="guest-information-area">
                     <h4>Car Information</h4>
                     <span id="errmsg"></span>
+                    <input type="hidden" id="edit_id" name="edit_id" />
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-block">
                                 <label for="guestsub" class="form-label">Car Name and model</label>
                                 <div class="input-text">
         
-                                    <input type="text" class="form-control" id="bikename" name="bikename" placeholder="Car Name and model" required>
+                                    <input type="text" class="form-control" id="edit_carname" name="edit_carname" placeholder="Car Name and model" required>
                                 </div>
                             </div>
                         </div>
@@ -117,14 +89,12 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Fuel type</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="carfuel" name="carfuel" required>
+                                    <select class="form-control wide" id="edit_carfuel" name="edit_carfuel" required>
                                         <option value="" selected disabled>Select Fuel type</option>
                                         <option value="Petrol" >Petrol</option>
                                         <option value="Diesel" >Diesel</option>
                                         <option value="Electric" >Electric</option>
-                                        {% for i in category%}
-                                        <option value="{{i.cat_name}}">{{i.cat_name}}</option>
-                                        {% endfor %}
+                                       
                                     </select>
                                </div>
                                 
@@ -133,14 +103,14 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="input-block">
                                 <label for="guestemail" class="form-label">Cost pre/Hr</label>
-                                <input type="number" class="form-control" name="costperhr" min="0" id="costperhr" placeholder="cost per/hr" required>
+                                <input type="number" class="form-control" name="edit_costperhr" min="0" id="edit_costperhr" placeholder="cost per/hr" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Vehicle type</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                    <select class="form-control wide" id="edit_vehicletype" name="edit_vehicletype" required>
                                         <option value="" selected disabled>Select Vehicle type</option>
                                         <option value="scooter" >Hatchback</option>
                                         <option value="motorcycle" >Sedan</option>
@@ -160,7 +130,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">City Name</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                    <select class="form-control wide" id="edit_city" name="edit_city" required>
                                         <option value="" selected disabled>Select city</option>
                                         <option value="Petrol" >Petrol</option>
                                         <option value="Electric" >Electric</option>
@@ -178,7 +148,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">vehicle Location</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="bikefuel" name="bikefuel" required>
+                                    <select class="form-control wide" id="edit_location" name="edit_location" required>
                                         <option value="" selected disabled>Select vehicle location</option>
                                         <option value="Petrol" >Petrol</option>
                                         <option value="Electric" >Electric</option>
@@ -191,19 +161,7 @@
                                </div>
                                 
                             </div>
-                       
-                        <!-- <div class="col-md-6">
-                            <div class="input-block">
-                                <label for="offer" class="form-label">Offers</label>
-                                <select class="default-select form-control wide" name="offer" id="offer">
-                                    <option selected>Select offer</option>
-                                    <option value="10">10%</option>
-                                    <option value="25">25%</option>
-                                    <option value="50">50%</option>
-                                    <option value="100">100%</option>
-                                </select>
-                            </div>
-                        </div> -->
+
                        
                     </div>
                 </div>
@@ -222,8 +180,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 1<span class="text-danger">*</span></p>
-                                                            <label for="pimage1" class="form-label"><img id="addoutput" src="templates/images/car.jpg"></label>
-                                                        <input type="file" accept="image/*" name="pimage1" id="pimage1" oninput="addoutput.src=window.URL.createObjectURL(this.files[0])" required>
+                                                            <label for="pimage1" class="form-label"><img id="edit_img1" src="templates/images/car.jpg"></label>
+                                                        <input type="file" accept="image/*" name="pimage1" id="pimage1" oninput="edit_img1.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                     
                                                 </div>
@@ -236,8 +194,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 2<span class="text-danger">*</span></p>
-                                                        <label for="pimage2" class="form-label"><img id="addoutput1" src="templates/images/car.jpg"></label>
-                                                        <input type="file" accept="image/*" name="pimage2" id="pimage2" oninput="addoutput1.src=window.URL.createObjectURL(this.files[0])" required>
+                                                        <label for="pimage2" class="form-label"><img id="edit_img2" src="templates/images/car.jpg"></label>
+                                                        <input type="file" accept="image/*" name="pimage2" id="pimage2" oninput="edit_img2.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                     
                                                 </div>
@@ -250,8 +208,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 3<span class="text-danger">*</span></p>
-                                                        <label for="pimage3" class="form-label"><img id="addoutput2" src="templates/images/car.jpg"></label>
-                                                        <input type="file" accept="image/*" name="pimage3" id="pimage3" oninput="addoutput2.src=window.URL.createObjectURL(this.files[0])" required>
+                                                        <label for="pimage3" class="form-label"><img id="edit_img3" src="templates/images/car.jpg"></label>
+                                                        <input type="file" accept="image/*" name="pimage3" id="pimage3" oninput="edit_img3.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                     
                                                 </div>
@@ -264,8 +222,8 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 4<span class="text-danger">*</span></p>
-                                                        <label for="pimage4" class="form-label"><img id="addoutput3" src="templates/images/car.jpg"></label>
-                                                        <input type="file" accept="image/*" name="pimage4" id="pimage4" oninput="addoutput3.src=window.URL.createObjectURL(this.files[0])" required>
+                                                        <label for="pimage4" class="form-label"><img id="edit_img4" src="templates/images/car.jpg"></label>
+                                                        <input type="file" accept="image/*" name="pimage4" id="pimage4" oninput="edit_img4.src=window.URL.createObjectURL(this.files[0])" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -280,12 +238,10 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_discription+" class="form-label">Transmission</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                    <select class="form-control wide" id="edit_transmission" name="edit_transmission" required>
                                         <option value="" selected disabled>Select Transmission type</option>
                                         <option value="scooter" >Manual</option>
                                         <option value="motorcycle" >Automatic</option>
-                                        
-                                        
                                         
                                     </select>
                                </div>
@@ -293,7 +249,7 @@
                               <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_methodOfUse" class="form-label">Seats</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="vehicletype" name="vehicletype" required>
+                                    <select class="form-control wide" id="edit_seats" name="edit_seats" required>
                                         <option value="" selected disabled>Select Seats</option>
                                         <option value="scooter"> 4/5 seater</option>
                                         <option value="motorcycle"> 6/7 seater</option>                                            
@@ -303,41 +259,41 @@
                            
                             <h5><strong>Others</strong></h5>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_airbags" name="edit_airbags" value="Air bags"/>
                                 <label>2 Front Airbags</label>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_musicsystem" name="edit_musicsystem" value="Music System"/>
                                 <label>Music System</label>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_usbcharger" name="edit_usbcharger" value="Usb charger"/>
                                 <label> USB charger</label>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_powersteering" name="edit_powersteering" value="Power Streering"/>
                                 <label> Power steering</label>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_airconditioning" name="edit_airconditioning" value="Air Conditioning"/>
                                 <label>Air Conditioning</label>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_toolkit" name="edit_toolkit" value="Tool kit"/>
                                 <label> Toolkit</label>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_reversecam" name="edit_reversecam" value="Reverse Camera"/>
                                 <label>  Reverse Camera</label>
                             </div>
                             <div class="mb-3 col-md-3 col-sm-2">
-                                <input type="checkbox" id="airbags" name="airbags"/>
+                                <input type="checkbox" id="edit_sparetyre" name="edit_sparetyre" value="Spare tyre"/>
                                 <label>Spare Tyre</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button type="button" onclick="add_product()" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="update_car()" class="btn btn-primary">Submit</button>
             </div>
                 </form>
         </div>
@@ -360,7 +316,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">View product</h5>
+                <h5 class="modal-title">View car</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -374,7 +330,7 @@
                                 <label for="guestsub" class="form-label">Car Name and model</label>
                                 <div class="input-text">
         
-                                    <span>Ford Mustang GT 2022</span>
+                                    <span id="vcarname">Ford Mustang GT 2022</span>
                                 </div>
                             </div>
                         </div>
@@ -382,7 +338,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Fuel type</label>
                                 <div class="input-text">
-                                    <span>Diesel</span>
+                                    <span id="vfueltype">Diesel</span>
                                </div>
                                 
                             </div>
@@ -391,14 +347,14 @@
                             <label for="guestemail" class="form-label">Cost pre/Hr</label>
                             <div class="input-block">
                                 
-                                <span>₹ 550</span>
+                                <span id="vcost">₹ 550</span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">Vehicle type</label>
                                 <div class="input-text">
-                                    <span>Luxury</span>
+                                    <span id="vvtype">Luxury</span>
                                </div>
                                 
                             </div>
@@ -407,7 +363,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">City Name</label>
                                 <div class="input-text">
-                                    <span>Chennai</span>
+                                    <span id="vcity">Chennai</span>
                                </div>
                                 
                             </div>
@@ -416,7 +372,7 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">vehicle Location</label>
                                 <div class="input-text">
-                                    <span>Chennai Central Railway Station</span>
+                                    <span id="vlocation">Chennai Central Railway Station</span>
                                </div>
                                 
                             </div>
@@ -438,7 +394,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 1<span class="text-danger">*</span></p>
-                                                            <label for="pimage1" class="form-label"><img id="addoutput" src="templates/images/car.jpg"></label>
+                                                            <label for="pimage1" class="form-label"><img id="vimg1" src="templates/images/car.jpg"></label>
                                                        
                                                     </div>
                                                     
@@ -452,7 +408,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 2<span class="text-danger">*</span></p>
-                                                        <label for="pimage2" class="form-label"><img id="addoutput1" src="templates/images/car.jpg"></label>
+                                                        <label for="pimage2" class="form-label"><img id="vimg2" src="templates/images/car.jpg"></label>
                                                        
                                                     </div>
                                                     
@@ -466,7 +422,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 3<span class="text-danger">*</span></p>
-                                                        <label for="pimage3" class="form-label"><img id="addoutput2" src="templates/images/car.jpg"></label>
+                                                        <label for="pimage3" class="form-label"><img id="vimg3" src="templates/images/car.jpg"></label>
                                                       
                                                     </div>
                                                     
@@ -480,7 +436,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="input-block profile">
                                                         <p>Image 4<span class="text-danger">*</span></p>
-                                                        <label for="pimage4" class="form-label"><img id="addoutput3" src="templates/images/car.jpg"></label>
+                                                        <label for="pimage4" class="form-label"><img id="vimg4" src="templates/images/car.jpg"></label>
                                                         
                                                     </div>
                                                 </div>
@@ -496,53 +452,24 @@
                             <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_discription+" class="form-label">Transmission</label>
                                 <div class="input-text">
-                                    <span>Manual</span>
+                                    <span id="vtransmission">Manual</span>
                                </div>
                               </div>
                               <div class="mb-3 col-md-6 col-sm-6">
                                 <label for="product_methodOfUse" class="form-label">Seats</label>
                                 <div class="input-text">
-                                    <span>4/5 Seater</span>
+                                    <span id="vseats">4/5 Seater</span>
                                </div>
                               </div>  
-                           
+                            
                             <h5><strong>Others</strong></h5>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                                
-                                <span>2 Front Airbags</span>
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                                
-                                <span>Music System</span>
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                    
-                                <span> USB charger</span>
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                               
-                                <span> Power steering</span>
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                                
-                                <span>Air Conditioning</span>
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                               
-                                <span> Toolkit</span>
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                                
-                                <span>  Reverse Camera</span>
-                            </div>
-                            <div class="mb-3 col-md-3 col-sm-2">
-                               
-                                <span>Spare Tyre</span>
+                            <div id="others" class="row"> 
+                            
                             </div>
                         </div>
                     </div>
                 </div>
-            
+            </div>
   
             </form>
                 
@@ -573,10 +500,10 @@
 <?php require_once 'include/bottom.php'; ?>
 
 <script type="text/javascript">
-    function product_view(id){
+    function view_car(id){
         $.ajax({
             type : "PUT",
-            url : "/admin/view_product/"+ id,
+            url : "/admin/view_car/"+ id,
             id : id,
             encode: true,
             dataType: 'json',
@@ -584,72 +511,120 @@
             contentType: false,
 
         }).done(function(data){
-            var image_path1 = "htdocs/product_image/" + data.product_image1;
-            var image_path2 = "htdocs/product_image/" + data.product_image2;
-            var image_path3 = "htdocs/product_image/" + data.product_image3;
-            var image_path4 = "htdocs/product_image/" + data.product_image4;
-            $("#vproductname").html(data.product_name);
-            $("#vproductcategory").html(data.product_category);
-            $("#vproductprice").html(data.product_price);
-            $("#vproductquantity").html(data.product_quantity);
-            $("#vproducttype").html(data.product_type);
-            $("#vproductoffer").html(data.product_offer);
-            $("#vproductimg1").attr("src", image_path1);
-            $("#vproductimg2").attr("src", image_path2);
-            $("#vproductimg3").attr("src", image_path3);
-            $("#vproductimg4").attr("src", image_path4);
-            $("#vproductdis").html(data.product_description);
-            $("#vproductmeth").html(data.method_of_use);
-            $("#vproductben").html(data.benefits);
+            var image_path1 = "templates/car_images/" + data.Image1;
+            var image_path2 = "templates/car_images/" + data.Image2;
+            var image_path3 = "templates/car_images/" + data.Image3;
+            var image_path4 = "templates/car_images/" + data.Image4;
+            $("#vcarname").html(data.Carname_model);
+            $("#vfueltype").html(data.Fueltype);
+            $("#vcost").html(data.CostperHR);
+            $("#vvtype").html(data.Vehicletype);
+            $("#vcity").html(data.Cityname);
+            $("#vlocation").html(data.Location);
+            $("#vimg1").attr("src", image_path1);
+            $("#vimg2").attr("src", image_path2);
+            $("#vimg3").attr("src", image_path3);
+            $("#vimg4").attr("src", image_path4);
+            $("#vtransmission").html(data.Transmission);
+            $("#vseats").html(data.Seats);
+            let otherss=document.getElementById('others');
+            for(let i=0;i<data.Others.length;i++){
+
+                var div = document.createElement("div");
+                div.classList.add("mb-3", "col-md-3", "col-sm-2");
+                var span = document.createElement("span");
+                span.textContent = data.Others[i];
+                div.appendChild(span);
+                otherss.appendChild(div);
+
+            }
             $("#listeditem").modal('show');
 
 
         });
     }
-    function edit_product(id){
+    function edit_car(id){
         $.ajax({
             type : 'PUT',
-            url :'/admin/view_product/'+ id,
+            url :'/admin/view_car/'+ id,
             id :id ,
             encode: true,
             dataType: 'json',
             processData: false,
             contentType: false,
         }).done(function(data){
-            var image_path1 = "htdocs/product_image/" + data.product_image1;
-            var image_path2 = "htdocs/product_image/" + data.product_image2;
-            var image_path3 = "htdocs/product_image/" + data.product_image3;
-            var image_path4 = "htdocs/product_image/" + data.product_image4;
-            $("#edit_proid").val(data.product_id);
-            $("#edit_productname").val(data.product_name);
-            $("#edit_productcategory").val(data.product_category);
-            $("#edit_productprice").val(data.product_price);
-            $("#edit_quantity").val(data.product_quantity);
-            $("#edit_ptype").val(data.product_type);
-            $("#editproimg1").attr("src", image_path1);
-            $("#editproimg2").attr("src", image_path2);
-            $("#editproimg3").attr("src", image_path3);
-            $("#editproimg4").attr("src", image_path4);
-            $("#edit_productdis").val(data.product_description);
-            $("#edit_productmeth").val(data.method_of_use);
-            $("#edit_productben").val(data.benefits);
-            $("#editpro").modal('show');
+            var image_path1 = "templates/car_images/" + data.Image1;
+            var image_path2 = "templates/car_images/" + data.Image2;
+            var image_path3 = "templates/car_images/" + data.Image3;
+            var image_path4 = "templates/car_images/" + data.Image4;
+            $("#edit_id").val(data.id);
+            $("#edit_carname").val(data.Carname_model);
+            $("#edit_carfuel").val(data.Fueltype);
+            $("#edit_costperhr").val(data.CostperHR);
+            $("#edit_vehicletype").val(data.Vehicletype);
+            $("#edit_city").val(data.Cityname);
+            $("#edit_location").val(data.Location);
+            $("#edit_img1").attr("src", image_path1);
+            $("#edit_img2").attr("src", image_path2);
+            $("#edit_img3").attr("src", image_path3);
+            $("#edit_img4").attr("src", image_path4);
+            $("#edit_transmission").val(data.Transmission);
+            $("#edit_seats").val(data.Seats);
+            let oth=["Air bags", "Music System", "Usb charger", "Power Streering", "Spare tyre","Air Conditioning","Tool kit","Reverse Camera"];
+            for(let i=0;i<data.Others.length;i++){
+                if(data.Others[i]=="Air bags"){
+                    const checkbox = document.getElementById('edit_airbags');
+                    checkbox.checked = true;
 
+                }
+                else if(data.Others[i]=="Music System"){
+                    const checkbox = document.getElementById('edit_musicsystem');
+                    checkbox.checked = true;
+
+                }
+                else if(data.Others[i]=="Usb charger"){
+                    const checkbox = document.getElementById('edit_usbcharger');
+                    checkbox.checked = true;
+
+                }
+                else if(data.Others[i]=="Power Streering"){
+                    const checkbox = document.getElementById('edit_powersteering');
+                    checkbox.checked = true;
+
+                }
+                else if(data.Others[i]=="Spare tyre"){
+                    const checkbox = document.getElementById('edit_sparetyre');
+                    checkbox.checked = true;
+
+
+                }
+                else if(data.Others[i]=="Air Conditioning"){
+                    const checkbox = document.getElementById('edit_airconditioning');
+                    checkbox.checked = true;
+
+                }
+                else if(data.Others[i]=="Tool kit"){
+                    const checkbox = document.getElementById('edit_toolkit');
+                    checkbox.checked = true;
+
+                }
+                else if(data.Others[i]=="Reverse Camera"){
+                    const checkbox = document.getElementById('edit_reversecam');
+                    checkbox.checked = true;
+
+                }
+                  
+
+            }           
+            $("#editpro").modal('show');
         });
     }
-    function update_product() {
-        var imageUrl1 = document.getElementById('editproimg1').src;
-        var imageUrl2 = document.getElementById('editproimg2').src;
-        var imageUrl3 = document.getElementById('editproimg3').src;
-        var imageUrl4 = document.getElementById('editproimg4').src;
-        alert(imageUrl1);
-        // var img1;
-        // fetch(imageUrl2)
-        //     .then(response => response.blob())
-        //     .then(blob => {
-        //         img1=blob;
-        //         //alert(blob);
-        //     });
+    function update_car() {
+        var imageUrl1 = document.getElementById('edit_img1').src;
+        var imageUrl2 = document.getElementById('edit_img2').src;
+        var imageUrl3 = document.getElementById('edit_img3').src;
+        var imageUrl4 = document.getElementById('edit_img4').src;
+       
         fetch(imageUrl1)
         .then(response =>response.blob())
         .then(blob => {
@@ -665,29 +640,33 @@
 
           
         var formData = new FormData();
-        formData.append("edit_proid", $("#edit_proid").val());
-        formData.append("edit_productname", $("#edit_productname").val());
-        formData.append("edit_productcategory", $("#edit_productcategory").val());
-        formData.append("edit_productprice", $("#edit_productprice").val());
-        formData.append("edit_productquantity",$("#edit_quantity").val());
-        formData.append("edit_ptype",$("#edit_ptype").val());
-        formData.append("edit_productdis", $("#edit_productdis").val());
-        formData.append("edit_productmeth", $("#edit_productmeth").val());
-        formData.append("edit_productben", $("#edit_productben").val());
-        formData.append("edit_proimg1", blob);
-        formData.append("edit_proimg2", blob1);
-        formData.append("edit_proimg3", blob2);
-        formData.append("edit_proimg4", blob3);
-        alert(formData.edit_proimg1);
-        
+        formData.append("edit_id", $("#edit_id").val());
+        formData.append("edit_carname", $("#edit_carname").val());
+        formData.append("edit_carfuel", $("#edit_carfuel").val());
+        formData.append("edit_costperhr", $("#edit_costperhr").val());
+        formData.append("edit_vehicletype",$("#edit_vehicletype").val());
+        formData.append("edit_city",$("#edit_city").val());
+        formData.append("edit_location", $("#edit_location").val());
+        formData.append("edit_transmission", $("#edit_transmission").val());
+        formData.append("edit_seats", $("#edit_seats").val());
+        formData.append("edit_img1", blob);
+        formData.append("edit_img2", blob1);
+        formData.append("edit_img3", blob2);
+        formData.append("edit_img4", blob3);
+        var ids=["edit_airbags","edit_musicsystem","edit_usbcharger","edit_powersteering","edit_airconditioning","edit_toolkit","edit_reversecam","edit_sparetyre"];
+        var others = [];
 
-        
+        for (var i = 0; i < ids.length; i++) {
+            if (document.getElementById(ids[i]).checked) {
+                others.push(document.getElementById(ids[i]).value);
+            }
+        }
+
+        formData.append("others", others);
              
-        
-
         $.ajax({
             type: 'POST',
-            url: '/admin/update_product',
+            url: '/admin/update_car',
             data: formData,
             encode: true,
             dataType: 'json',
@@ -712,10 +691,10 @@
     }
     function del_product(){
         var id = document.getElementById('delid').value;
-        alert(id);
+    
         $.ajax( {
-            type    : "get",
-            url     : '/admin/delete_product/'+id,
+            type    : "put",
+            url     : '/admin/delete_car/'+id,
             id    : id,
             contentType: "application/json",
             success: function(data) {
@@ -725,21 +704,7 @@
         return false;
 
     }
-    function change_state(id){
-        //var id = document.getElementById('delid').value;
-        
-        $.ajax( {
-            type    : "get",
-            url     : '/admin/change_displaystatus/'+id,
-            id    : id,
-            contentType: "application/json",
-            success: function(data) {
-                
-            },
-        });
-        return false;
-
-    }
+    
 
 </script>
 
