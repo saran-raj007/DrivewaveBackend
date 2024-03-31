@@ -146,7 +146,7 @@
 					</a>
 					<ul aria-expanded="false">
 						
-						<li><a href="/rent_request" title="rent request">Rent Request</a></li>
+						<li><a href="/admin/rentrequest" title="rent request">Rent Request</a></li>
 						
 					</ul>
 				</li>
@@ -192,7 +192,7 @@
 						<span class="nav-text">Query Manager</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="/query_request" title="">Query</a></li>
+						<li><a href="/admin/query" title="">Query</a></li>
 					</ul>
 				</li>
 				<!--<li>

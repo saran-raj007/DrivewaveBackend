@@ -30,6 +30,7 @@ class Query(Base):
     __tablename__ = 'query'
     
     id=Column(Integer,index=True,autoincrement=True, primary_key=True,nullable=False)
+    QueryId=Column(String(255),nullable=False)
     Emailid=Column(String(255),nullable=False)
     Querycontent=Column(String(355),nullable=False)
   

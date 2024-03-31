@@ -21,6 +21,11 @@ router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 @router.get("/vehiclelist")
 def rentalpoints(request:Request,location:str,place:str,starttime:str,endtime:str,vtype:str,db:Session=Depends(get_db)):
     login_status=0
+    fetch_vehicle=None
+    if vtype=="car":
+        fetch_vehicle=db.query(models.Cars).filter(models.Cars.Cityname==location).filter(models.Cars.Location==place).filter(models.Cars.Status=="Active").all()
+    else:
+        fetch_vehicle=db.query(models.Bikes).filter(models.Bikes.Cityname==location).filter(models.Bikes.Location==place).filter(models.Bikes.Status=="Active").all()
     try:
        
         token = request.session["user"]
@@ -32,6 +37,7 @@ def rentalpoints(request:Request,location:str,place:str,starttime:str,endtime:st
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             login_status=1
-            return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype}) 
+
+            return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype,"fetch_vehicle":fetch_vehicle}) 
     except:
-         return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype}) 
+         return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype,"fetch_vehicle":fetch_vehicle}) 

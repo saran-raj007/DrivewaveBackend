@@ -37,7 +37,9 @@ def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:
 
 @router.post("/query_request")
 def queryRequest(request:Request,db:Session=Depends(get_db),emailid:str=Form(...),querycontent:str=Form(...)):
-    query_data=models.Query(Emailid=emailid,Querycontent=querycontent,Status="Active",Created_at=current_datetime)
+    total_query=db.query(models.Query).all()
+    qid="Qry2021"+str(len(total_query))
+    query_data=models.Query(QueryId=qid,Emailid=emailid,Querycontent=querycontent,Status="Active",Created_at=current_datetime)
     db.add(query_data)
     db.commit()
     response="Done"
