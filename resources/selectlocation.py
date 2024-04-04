@@ -11,30 +11,14 @@ from models import get_db,models
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from resources.utils import create_access_token
 from starlette.middleware.sessions import SessionMiddleware
-import requests
+from Externalapi import list_cities_in_india
 from jose import jwt, JWTError
 current_datetime = datetime.utcnow()
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
-def list_cities_in_india():
-    base_url = "http://api.geonames.org/searchJSON"
-    params = {
-        "country": "IN",
-        "featureClass": "P",
-        "maxRows": 10,
-        "username": "derivewave"  
-    }
-    response = requests.get(base_url, params=params)
-    if response.status_code == 200:
-        data = response.json()
-        cities=[]
-        for city in data.get("geonames", []):
-            cities.append(city.get("name"))
-        return cities
-    else:
-        print(response)
+
 cities_in_india=list_cities_in_india()
 
 @router.get("/locationSelection")

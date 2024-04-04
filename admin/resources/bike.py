@@ -12,11 +12,19 @@ from models import get_db,models
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from admin.resources.utils import create_access_token
 from starlette.middleware.sessions import SessionMiddleware
+from Externalapi import list_cities_in_india,get_place
 from jose import jwt, JWTError
+import json
+import requests
 current_datetime = datetime.utcnow()
 router = APIRouter()
 templates = Jinja2Templates(directory="admin/templates")
 router.mount("/admin/templates", StaticFiles(directory="admin/templates"), name="templates")
+
+
+
+
+
 
 
 @router.get("/bike")
@@ -30,7 +38,7 @@ def bike(request:Request,db:Session=Depends(get_db)):
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:    
            bikes=db.query(models.Bikes).filter(models.Bikes.Status=="Active").all()
-           return templates.TemplateResponse('bike.php', context={'request': request,'bikes':bikes})
+           return templates.TemplateResponse('bike.php', context={'request': request,'bikes':bikes,"cities":list_cities_in_india()})
     except JWTError:
         return RedirectResponse("/admin/login", status_code=303)
 
@@ -46,7 +54,7 @@ def bike(request:Request):
         if user_name is None:
             raise HTTPException(status_code=401,detail="Unauthorized")
         else: 
-           return templates.TemplateResponse('add_bike.php', context={'request': request})
+           return templates.TemplateResponse('add_bike.php', context={'request': request,"cities":list_cities_in_india()})
     except JWTError:
         return RedirectResponse("/admin/login", status_code=303)
 
@@ -108,7 +116,7 @@ def addBike(request:Request,db:Session=Depends(get_db),bikename:str=Form(...),bi
        
 
 @router.put("/view_bike/{id}")
-def view_bike(id:int,request:Request,db:Session=Depends(get_db)):
+async def view_bike(id:int,request:Request,db:Session=Depends(get_db)):
     
     try:
         token=request.session["admin"]
@@ -119,9 +127,10 @@ def view_bike(id:int,request:Request,db:Session=Depends(get_db)):
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             vbike=db.query(models.Bikes).filter(models.Bikes.id==id,models.Bikes.Status=="Active").first()
+            vbike.location= get_place(vbike.Cityname,None,None)
             json_compatible_item_data = jsonable_encoder(vbike)
             return JSONResponse(content=json_compatible_item_data)
-    except:
+    except JWTError:
         return RedirectResponse("/admin/login", status_code=303)
         #raise HTTPException(status_code=401,detail="Unauthorized")
         
@@ -193,4 +202,22 @@ def delete_bike(id:int,request:Request,db:Session=Depends(get_db)):
             json_compatible_item_data = jsonable_encoder(error)
             return JSONResponse(content=json_compatible_item_data)
     except JWTError:
+        return RedirectResponse("/admin/login", status_code=303)
+
+
+@router.put("/fetch_location/{city}")
+def fetch_location(city:str,request:Request):
+    
+    try:
+        token=request.session["admin"]
+        payload=jwt.decode(token,BaseConfig.SECRET_KEY,algorithms=[BaseConfig.ALGORITHM])
+        user_name:str=payload.get('user_name')
+
+        if user_name is None :
+            raise HTTPException(status_code=401,detail="Unauthorized")
+        else:
+            location=get_place(city,None,None);
+            json_compatible_item_data = jsonable_encoder(location)
+            return JSONResponse(content=json_compatible_item_data)
+    except:
         return RedirectResponse("/admin/login", status_code=303)

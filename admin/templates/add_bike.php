@@ -31,9 +31,7 @@
                                             <option value="" selected disabled>Select Fuel type</option>
                                             <option value="Petrol" >Petrol</option>
                                             <option value="Electric" >Electric</option>
-                                            {% for i in category%}
-                                            <option value="{{i.cat_name}}">{{i.cat_name}}</option>
-                                            {% endfor %}
+                                            
                                             
                                             
                                         </select>
@@ -55,9 +53,7 @@
                                             <option value="" selected disabled>Select Vehicle type</option>
                                             <option value="scooter" >scooter</option>
                                             <option value="motorcycle" >motorcycle</option>
-                                            {% for i in category%}
-                                            <option value="{{i.cat_name}}">{{i.cat_name}}</option>
-                                            {% endfor %}
+                                            
                                                
                                         </select>
                                    </div>
@@ -68,12 +64,10 @@
                                 <div class="input-block">
                                     <label for="guestnumber" class="form-label">City Name</label>
                                     <div class="input-text">
-                                        <select class="form-control wide" id="cityname" name="cityname" required>
+                                        <select class="form-control wide" id="cityname" name="cityname" onchange="fetch_location(this.value)" required>
                                             <option value="" selected disabled>Select city</option>
-                                            <option value="Petrol" >Petrol</option>
-                                            <option value="Electric" >Electric</option>
-                                            {% for i in category%}
-                                            <option value="{{i.cat_name}}">{{i.cat_name}}</option>
+                                            {% for i in cities%}
+                                            <option value="{{i}}">{{i}}</option>
                                             {% endfor %}
                                             
                                             
@@ -88,11 +82,7 @@
                                     <div class="input-text">
                                         <select class="form-control wide" id="location" name="location" required>
                                             <option value="" selected disabled>Select vehicle location</option>
-                                            <option value="Petrol" >Petrol</option>
-                                            <option value="Electric" >Electric</option>
-                                            {% for i in category%}
-                                            <option value="{{i.cat_name}}">{{i.cat_name}}</option>
-                                            {% endfor %}
+                                           
                                             
                                             
                                         </select>
@@ -257,6 +247,38 @@
         }
 
       });
+        
+    }
+    function fetch_location(city){
+        $.ajax({
+            type :"PUT",
+            url:"/admin/fetch_location/"+city,
+            encode: true,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+    
+          }).done(function(data1){
+             let lodiv=document.getElementById('location');
+             alert(lodiv);
+             while (lodiv&&lodiv.firstChild) {
+                lodiv.removeChild(lodiv.firstChild);
+            }
+            var firstOption = document.createElement('option');
+            firstOption.value = '';
+            firstOption.textContent = 'Select vehicle location';
+            firstOption.disabled = true;
+            firstOption.selected = true;
+            lodiv.appendChild(firstOption);
+            for(var i=0;i<data1.length;i++){
+                var option1 = document.createElement('option');
+                option1.value = data1[i];
+                option1.textContent = data1[i];
+                lodiv.appendChild(option1);
+            }
+                
+    
+          });
         
     }
 
