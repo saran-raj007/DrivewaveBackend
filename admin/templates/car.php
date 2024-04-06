@@ -112,15 +112,10 @@
                                 <div class="input-text">
                                     <select class="form-control wide" id="edit_vehicletype" name="edit_vehicletype" required>
                                         <option value="" selected disabled>Select Vehicle type</option>
-                                        <option value="scooter" >Hatchback</option>
-                                        <option value="motorcycle" >Sedan</option>
-                                        <option value="motorcycle" >SUV</option>
-                                        <option value="motorcycle" >Luxury</option>
-                                        {% for i in category%}
-                                        <option value="{{i.cat_name}}">{{i.cat_name}}</option>
-                                        {% endfor %}
-                                        
-                                        
+                                        <option value="Hatchback" >Hatchback</option>
+                                        <option value="Sedan" >Sedan</option>
+                                        <option value="SUV" >SUV</option>
+                                        <option value="Luxury" >Luxury</option>
                                     </select>
                                </div>
                                 
@@ -130,14 +125,10 @@
                             <div class="input-block">
                                 <label for="guestnumber" class="form-label">City Name</label>
                                 <div class="input-text">
-                                    <select class="form-control wide" id="edit_city" name="edit_city" required>
-                                        <option value="" selected disabled>Select city</option>
-                                        <option value="Petrol" >Petrol</option>
-                                        <option value="Electric" >Electric</option>
-                                        {% for i in category%}
-                                        <option value="{{i.cat_name}}">{{i.cat_name}}</option>
+                                    <select class="form-control wide" id="edit_city" name="edit_city" onchange="fetch_location(this.value)" required>
+                                        {% for i in cities%}
+                                        <option value="{{i}}">{{i}}</option>
                                         {% endfor %}
-                                        
                                         
                                     </select>
                                </div>
@@ -149,12 +140,7 @@
                                 <label for="guestnumber" class="form-label">vehicle Location</label>
                                 <div class="input-text">
                                     <select class="form-control wide" id="edit_location" name="edit_location" required>
-                                        <option value="" selected disabled>Select vehicle location</option>
-                                        <option value="Petrol" >Petrol</option>
-                                        <option value="Electric" >Electric</option>
-                                        {% for i in category%}
-                                        <option value="{{i.cat_name}}">{{i.cat_name}}</option>
-                                        {% endfor %}
+                                       
                                         
                                         
                                     </select>
@@ -240,8 +226,8 @@
                                 <div class="input-text">
                                     <select class="form-control wide" id="edit_transmission" name="edit_transmission" required>
                                         <option value="" selected disabled>Select Transmission type</option>
-                                        <option value="scooter" >Manual</option>
-                                        <option value="motorcycle" >Automatic</option>
+                                        <option value="Manual" >Manual</option>
+                                        <option value="Automatic" >Automatic</option>
                                         
                                     </select>
                                </div>
@@ -251,8 +237,8 @@
                                 <div class="input-text">
                                     <select class="form-control wide" id="edit_seats" name="edit_seats" required>
                                         <option value="" selected disabled>Select Seats</option>
-                                        <option value="scooter"> 4/5 seater</option>
-                                        <option value="motorcycle"> 6/7 seater</option>                                            
+                                        <option value="4/5 seater"> 4/5 seater</option>
+                                        <option value="6/7 seater"> 6/7 seater</option>                                            
                                     </select>
                                </div>
                               </div>  
@@ -557,6 +543,23 @@
             var image_path2 = "templates/car_images/" + data.Image2;
             var image_path3 = "templates/car_images/" + data.Image3;
             var image_path4 = "templates/car_images/" + data.Image4;
+            let lodiv=document.getElementById('edit_location');
+            alert(lodiv);
+             while (lodiv&&lodiv.firstChild) {
+                lodiv.removeChild(lodiv.firstChild);
+            }
+            var firstOption = document.createElement('option');
+            firstOption.value = '';
+            firstOption.textContent = 'Select vehicle location';
+            firstOption.disabled = true;
+            firstOption.selected = true;
+            lodiv.appendChild(firstOption);
+            for(var i=0;i<data.location.length;i++){
+                var option1 = document.createElement('option');
+                option1.value = data.location[i];
+                option1.textContent = data.location[i];
+                lodiv.appendChild(option1);
+            }
             $("#edit_id").val(data.id);
             $("#edit_carname").val(data.Carname_model);
             $("#edit_carfuel").val(data.Fueltype);
@@ -703,6 +706,39 @@
         });
         return false;
 
+    }
+    function fetch_location(city){
+        
+        $.ajax({
+            type :"PUT",
+            url:"/admin/fetch_location/"+city,
+            encode: true,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+    
+          }).done(function(data1){
+             let lodiv=document.getElementById('edit_location');
+             alert(lodiv);
+             while (lodiv&&lodiv.firstChild) {
+                lodiv.removeChild(lodiv.firstChild);
+            }
+            var firstOption = document.createElement('option');
+            firstOption.value = '';
+            firstOption.textContent = 'Select vehicle location';
+            firstOption.disabled = true;
+            firstOption.selected = true;
+            lodiv.appendChild(firstOption);
+            for(var i=0;i<data1.length;i++){
+                var option1 = document.createElement('option');
+                option1.value = data1[i];
+                option1.textContent = data1[i];
+                lodiv.appendChild(option1);
+            }
+                
+    
+          });
+        
     }
     
 

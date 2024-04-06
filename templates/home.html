@@ -53,11 +53,11 @@
         <h3>Book your drive now!</h3>
         <form class="needs-validation" novalidate>
         <div class="search-field">
-                
                 <select name="place" id="place" class="form-control" style="width :250px;" required>
                   <option value="" disabled selected>select location</option>
-                  <option value="Bike"> Majestic Bus Stand </option>
-                  <option value="Car"> Yeshwanthpur, Bengaluru, Karna... </option>
+                  {% for i in place%}
+                    <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
                 </select>
                 
                 <input type="datetime-local" id="start-time"  class="form-control"  min=""   placeholder="select pickup and drop time and date" required>

@@ -37,7 +37,6 @@ def get_place(city_name,lat,long):
     
     latitude, longitude = get_lat_lon(city_name)
     if latitude is not None and longitude is not None:
-        print(f"The latitude and longitude of {city_name} are: {latitude}, {longitude}")
         url = "https://api.foursquare.com/v3/places/search?fields=location"
 
 

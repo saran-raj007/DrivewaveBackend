@@ -79,6 +79,7 @@ class Bikes(Base):
     Status=Column(String(100),nullable=False)
     Created_at=Column(String(100),nullable=False)
 
+
 class Cars(Base):
     
     __tablename__ = 'cars'
@@ -102,6 +103,31 @@ class Cars(Base):
     Availablestatus=Column(String(255),nullable=False)
     
      #comman columns
+    Status=Column(String(100),nullable=False)
+    Created_at=Column(String(100),nullable=False)
+
+
+
+class Rentrequest(Base):
+    
+    __tablename__='rentrequest'
+    
+    id=Column(Integer,index=True,autoincrement=True, primary_key=True,nullable=False)
+    BookingId=Column(String(255),nullable=False) 
+    Username=Column(String(255),nullable=False)
+    Emailid=Column(String(255),nullable=False)
+    VehicleId=Column(String(255),nullable=False)
+    Pickuptime=Column(String(255),nullable=False)
+    Droptime=Column(String(255),nullable=False)
+    Totalcost=Column(String(255),nullable=False)
+    PaymentId=Column(String(255),nullable=False)
+    City=Column(String(255),nullable=False)
+    Location=Column(String(255),nullable=False)
+    TimeofpaymentCompletion=Column(String(255),nullable=False)
+    
+    
+    
+    #comman columns
     Status=Column(String(100),nullable=False)
     Created_at=Column(String(100),nullable=False)
     

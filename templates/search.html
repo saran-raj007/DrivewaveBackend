@@ -171,7 +171,7 @@
             <div class="row ">
                 <div class="col-3 filter-md">
                     <div class="card">
-                        <div class="card-header bg-success">
+                        <div class="card-header bg-success text-white fw-bolder">
                             Filter
                         </div>
                         <div class="card-body">
@@ -304,46 +304,48 @@
                         <div class="col-4 col-12">
                             <div class="car-list-home">
                                 <div class="row">
+                                   {%if type=="Bike"%} 
+                                    {% for i in fetch_vehicle %}
                                     <div class="col-md-4 col-12">
                                         <a href="/vehicledetails">
                                         <section class="car-list-card">
                                             <div class="car-list-card-image" style="height: 160px;"><img
-                                                    src="templates/static/images/ycar.png">
+                                                    src="admin/templates/bike_images/{{i.Image1}}">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
-                                                        4.98 . 55 Trips
+                                                        4.98 . {{i.Nooftrips}} Trips
                                                     </div>
                                                     <div class="car-list-card-description-reviews-count">
                                                     </div>
                                                 </div>
                                                 <div class="car-list-card-description-title">
-                                                    Tata Harrier | 2022
+                                                    {{i.Bikename_model}}
                                                 </div>
                                                 <div class="car-list-card-description-properties">
                                                     <div class="car-list-card-description-properties-property">
-                                                        Manual
+                                                        {{i.Starttype}}
                                                         <div class="property-point"></div>
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
-                                                        Petrol
+                                                        {{i.Vehicletype}}
                                                         <div class="property-point"></div>
                                                     </div>
-                                                    <div class="car-list-card-description-properties-property">
+                                                   <!-- <div class="car-list-card-description-properties-property">
                                                         7 Seats
-                                                        <!---->
-                                                    </div>
+                                                     
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <div class="car-list-card-price-distance">
                                                 <div class="car-list-card-price">
                                                     <div class="car-list-card-price-availability-text">
-                                                        ₹<u>1,550 excluding fees</u>
+                                                        
                                                     </div>
                                                     <div class="car-list-card-price-title">
-                                                        ₹180/hr
+                                                        ₹{{i.CostperHR}}/hr
                                                     </div>
                                                     <div class="car-list-card-price-sub-title">
                                                     </div>
@@ -352,48 +354,49 @@
                                         </section>
                                        </a>
                                     </div>
+                                    {% endfor %}
+                                    {% endif %}
 
+                                    {%if type=="Car"%} 
+                                    {% for i in fetch_vehicle %}   
                                     <div class="col-md-4 col-12">
-                                        <a href="/vehicledetails">
+                                        <a href="/vehicledetails?id={{i.Carid}}&starttime={{starttime}}&endtime={{endtime}}&typee={{type}}">
                                         <section class="car-list-card">
                                             <div class="car-list-card-image" style="height: 160px;"><img
-                                                    src="templates/static/images/bike1.png">
+                                                    src="admin/templates/car_images/{{i.Image1}}">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
-                                                        4.66 .4 Trips
+                                                        4.66 .{{i.Nooftrips}} Trips
                                                     </div>
                                                     <div class="car-list-card-description-reviews-count">
                     
                                                     </div>
                                                 </div>
                                                 <div class="car-list-card-description-title">
-                                                    Bajaj Pulsar | 2018
+                                                    {{i.Carname_model}}
                                                 </div>
                                                 <div class="car-list-card-description-properties">
                                                     <div class="car-list-card-description-properties-property">
-                                                        Manual
+                                                        {{i.Transmission}}
                                                         <div class="property-point"></div>
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
-                                                        Petrol
+                                                        {{i.Vehicletype}}
                                                         <div class="property-point"></div>
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         
-                                                        <!---->
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="car-list-card-price-distance">
                                                 <div class="car-list-card-price">
-                                                    <div class="car-list-card-price-availability-text">
-                                                        ₹<u>2,000 excluding fees</u>
-                                                    </div>
                                                     <div class="car-list-card-price-title">
-                                                        ₹250/hr
+                                                        ₹{{i.CostperHR}}/hr
                                                     </div>
                                                     <div class="car-list-card-price-sub-title">
                                                     </div>
@@ -402,14 +405,16 @@
                                         </section>
                                        </a>
                                     </div>
+                                    {% endfor %}
+                                    {% endif %}
 
-                                    <div class="col-md-4 col-12">
+                                    <!--<div class="col-md-4 col-12">
                                         <a href="/vehicledetails">
                                         <section class="car-list-card">
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/blucar.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -432,7 +437,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         5 Seats
-                                                        <!---->
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -458,7 +463,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/bike2.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -481,8 +486,7 @@
                                                         <div class="property-point"></div>
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
-                                                        
-                                                        <!---->
+                                                    
                                                     </div>
                                                 </div>
                                             </div>
@@ -507,7 +511,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/buucar.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -530,7 +534,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         5 Seats
-                                                        <!---->
+                                                    
                                                     </div>
                                                 </div>
                                             </div>
@@ -556,7 +560,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/bike3.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -580,7 +584,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         
-                                                        <!---->
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -605,7 +609,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/redcar.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -628,7 +632,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         7 Seats
-                                                        <!---->
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -654,7 +658,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/bike4.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -678,7 +682,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         
-                                                        <!---->
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -703,7 +707,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/mmcar.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -726,7 +730,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         6 Seats
-                                                        <!---->
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -751,7 +755,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/wwcar.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -774,7 +778,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         5 Seats
-                                                        <!---->
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -799,7 +803,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/hhhbike.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -822,7 +826,7 @@
                                                         <div class="property-point"></div>
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
-                                                        <!---->
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -848,7 +852,7 @@
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="templates/static/images/violent car.png">
                                             </div>
-                                            <div class="car-list-card-description"><!---->
+                                            <div class="car-list-card-description">
                                                 <div class="car-list-card-description-reviews">
                                                     <div class="car-list-card-description-reviews-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                                                     <div class="car-list-card-description-reviews-value">
@@ -872,7 +876,7 @@
                                                     </div>
                                                     <div class="car-list-card-description-properties-property">
                                                         5 Seats
-                                                        <!---->
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -890,7 +894,7 @@
                                             </div>
                                         </section>
                                         </a>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>

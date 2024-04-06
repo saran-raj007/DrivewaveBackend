@@ -22,7 +22,7 @@ router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 def rentalpoints(request:Request,location:str,place:str,starttime:str,endtime:str,vtype:str,db:Session=Depends(get_db)):
     login_status=0
     fetch_vehicle=None
-    if vtype=="car":
+    if vtype=="Car":
         fetch_vehicle=db.query(models.Cars).filter(models.Cars.Cityname==location).filter(models.Cars.Location==place).filter(models.Cars.Status=="Active").all()
     else:
         fetch_vehicle=db.query(models.Bikes).filter(models.Bikes.Cityname==location).filter(models.Bikes.Location==place).filter(models.Bikes.Status=="Active").all()
@@ -40,4 +40,5 @@ def rentalpoints(request:Request,location:str,place:str,starttime:str,endtime:st
 
             return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype,"fetch_vehicle":fetch_vehicle}) 
     except:
-         return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype,"fetch_vehicle":fetch_vehicle}) 
+        print(fetch_vehicle)
+        return templates.TemplateResponse('search.html', context={'request': request,'location':location,"login_status":login_status,"starttime":starttime,"endtime":endtime,"location":location,"place":place,"type":vtype,"fetch_vehicle":fetch_vehicle}) 

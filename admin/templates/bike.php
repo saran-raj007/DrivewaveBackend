@@ -230,8 +230,8 @@
                                 <div class="input-text">
                                     <select class="form-control wide" id="edit_starttype" name="edit_starttype" required>
                                         <option value="" selected disabled>Select start type</option>
-                                        <option value="scooter" >Self start</option>
-                                        <option value="motorcycle" >Kick start</option>
+                                        <option value="Self start" >Self start</option>
+                                        <option value="Kick start" >Kick start</option>
                                         
                                         
                                         

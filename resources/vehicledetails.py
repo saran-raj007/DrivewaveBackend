@@ -19,7 +19,22 @@ templates = Jinja2Templates(directory="templates")
 router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
 @router.get("/vehicledetails")
-def rentalpoints(request:Request,db:Session=Depends(get_db)):
+def rentalpoints(id:str,starttime:str,endtime:str,typee:str,request:Request,db:Session=Depends(get_db)):
+    vehicle_details=None
+    date_format = "%Y-%m-%dT%H:%M"
+    date1 = datetime.strptime(starttime, date_format)
+    date2 = datetime.strptime(endtime, date_format)
+
+    time_difference = date2-date1
+    starttime = date1.strftime("%a, %d %b, %I:%M %p")
+    endtime = date2.strftime("%a, %d %b, %I:%M %p")
+    total_hours = round(time_difference.total_seconds() / 3600)
+    if id[0]=='B':
+        vehicle_details=db.query(models.Bikes).filter(models.Bikes.Bikeid==id).filter(models.Bikes.Status=="Active").first()
+    elif id[0]=='C':
+        vehicle_details=db.query(models.Cars).filter(models.Cars.Carid==id).filter(models.Cars.Status=="Active").first()
+    total_cost=vehicle_details.CostperHR*total_hours
+        
     login_status=0
     try:
         token = request.session["user"]
@@ -31,9 +46,10 @@ def rentalpoints(request:Request,db:Session=Depends(get_db)):
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             login_status=1
-            return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status}) 
+            return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost}) 
     except:
-         return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status}) 
+         return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost}) 
+     
      
 
 @router.get("/payment")

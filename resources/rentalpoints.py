@@ -13,6 +13,7 @@ from resources.utils import create_access_token
 from starlette.middleware.sessions import SessionMiddleware
 import requests
 from jose import jwt, JWTError
+from Externalapi import get_place
 current_datetime = datetime.utcnow()
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -21,6 +22,7 @@ router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 @router.get("/rentalpoints")
 def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:Session=Depends(get_db)):
     login_status=0
+    place=get_place(location,latitude,longitude)
     try:
         token = request.session["user"]
         payload = jwt.decode(token, BaseConfig.SECRET_KEY, algorithms=[BaseConfig.ALGORITHM] )
@@ -31,9 +33,10 @@ def rentalpoints(request:Request,location:str,latitude:float,longitude:float,db:
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             login_status=1
-            return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status}) 
+            
+            return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status,"place":place}) 
     except:
-         return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status})
+         return templates.TemplateResponse('home.html', context={'request': request,'location':location,"login_status":login_status,"place":place})
 
 @router.post("/query_request")
 def queryRequest(request:Request,db:Session=Depends(get_db),emailid:str=Form(...),querycontent:str=Form(...)):
