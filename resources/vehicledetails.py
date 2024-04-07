@@ -19,7 +19,7 @@ templates = Jinja2Templates(directory="templates")
 router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
 @router.get("/vehicledetails")
-def rentalpoints(id:str,starttime:str,endtime:str,typee:str,request:Request,db:Session=Depends(get_db)):
+def rentalpoints(id:str,starttime:str,endtime:str,typee:str,location:str,place:str,request:Request,db:Session=Depends(get_db)):
     vehicle_details=None
     date_format = "%Y-%m-%dT%H:%M"
     date1 = datetime.strptime(starttime, date_format)
@@ -34,6 +34,7 @@ def rentalpoints(id:str,starttime:str,endtime:str,typee:str,request:Request,db:S
     elif id[0]=='C':
         vehicle_details=db.query(models.Cars).filter(models.Cars.Carid==id).filter(models.Cars.Status=="Active").first()
     total_cost=vehicle_details.CostperHR*total_hours
+    final_amount=total_cost+500+120
         
     login_status=0
     try:
@@ -46,9 +47,9 @@ def rentalpoints(id:str,starttime:str,endtime:str,typee:str,request:Request,db:S
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             login_status=1
-            return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost}) 
+            return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost,"final_amount":final_amount,"location":location,"place":place,"id":id}) 
     except:
-         return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost}) 
+         return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost,"final_amount":final_amount,"location":location,"place":place,"id":id}) 
      
      
 
@@ -68,3 +69,30 @@ def rentalpoints(request:Request,db:Session=Depends(get_db)):
             return templates.TemplateResponse('payment.html', context={'request': request,"login_status":login_status}) 
     except:
          return templates.TemplateResponse('payment.html', context={'request': request,"login_status":login_status}) 
+
+
+@router.post("/payment")
+def payment(request:Request,db:Session=Depends(get_db),vehicleid:str=Form(...),starttime:str=Form(...),endtime:str=Form(...),final_cost:str=Form(...),paymentid:str=Form(...),city:str=Form(...),location:str=Form(...)):
+    login_status=0
+    try:
+        token = request.session["user"]
+        payload = jwt.decode(token, BaseConfig.SECRET_KEY, algorithms=[BaseConfig.ALGORITHM] )
+        username: str= payload.get("user_name")
+        usermail: str= payload.get("user_email")
+        
+        if username is None or usermail is None:
+            raise HTTPException(status_code=401,detail="Unauthorized")
+        else:
+            login_status=1
+            total_booking=db.query(models.Rentrequest).all()
+            bookingid='BOK'+str(len(total_booking)+1)
+            data=models.Rentrequest(BookingId=bookingid,Username=username,Emailid=usermail,VehicleId=vehicleid,Pickuptime=starttime,Droptime=endtime,Totalcost=final_cost,PaymentId=paymentid,City=city,Location=location,TimeofpaymentCompletion=current_datetime,Status="Active",Created_at=current_datetime)
+            db.add(data)
+            db.commit()
+            error = "Done"
+            json_compatible_item_data = jsonable_encoder(error)
+            return JSONResponse(content=json_compatible_item_data)
+    except JWTError:
+        error = "usernotfound"
+        json_compatible_item_data = jsonable_encoder(error)
+        return JSONResponse(content=json_compatible_item_data)

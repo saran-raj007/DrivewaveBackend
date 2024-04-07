@@ -32,9 +32,16 @@ def profile(request:Request,db:Session=Depends(get_db)):
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             login_status=1
+            rented_vehicles=db.query(models.Rentrequest).filter(models.Rentrequest.Emailid==usermail).filter(models.Rentrequest.Status=="Active").all()
+            vehicledetails=[]
+            for i in rented_vehicles:
+                if i.VehicleId[0]=='C':
+                    vehicledetails.append(db.query(models.Cars).filter(models.Cars.Carid==i.VehicleId).filter(models.Cars.Status=="Active").first())
+                elif i.VehicleId[0]=='B':
+                    vehicledetails.append(db.query(models.Bikes).filter(models.Bikes.Bikeid==i.VehicleId).filter(models.Bikes.Status=="Active").first())
             user_datas=db.query(models.User).filter(models.User.Emailid == usermail,models.User.Status=="Active").first()
-            return templates.TemplateResponse('userprofile.html', context={'request': request,"login_status":login_status,"user_datas":user_datas}) 
-    except:
+            return templates.TemplateResponse('userprofile.html', context={'request': request,"login_status":login_status,"user_datas":user_datas,"rented_vehicles":rented_vehicles,"vehicledetails":vehicledetails}) 
+    except JWTError:
          raise HTTPException(status_code=401,detail="Unauthorized")
      
 
@@ -92,4 +99,30 @@ def updatepassword(request:Request,db:Session=Depends(get_db),userid:str=Form(..
                 return JSONResponse(content=json_compatible_item_data) 
     except:
         raise HTTPException(status_code=401,detail="Unauthorized")
+    
+
+
+@router.put("/view_bookeddetails/{id}")
+def view_bookeddetails(id:str,request:Request,db:Session=Depends(get_db)):
+    login_status=0
+    try:
+        token = request.session["user"]
+        payload = jwt.decode(token, BaseConfig.SECRET_KEY, algorithms=[BaseConfig.ALGORITHM] )
+        username: str= payload.get("user_name")
+        usermail: str= payload.get("user_email")
+        
+        if username is None or usermail is None:
+            raise HTTPException(status_code=401,detail="Unauthorized")
+        else:
+            bookdetails=db.query(models.Rentrequest).filter(models.Rentrequest.BookingId==id).filter(models.Rentrequest.Status=="Active").first()
+            if bookdetails.VehicleId[0]=='B':
+                bookdetails.vech=db.query(models.Bikes).filter(models.Bikes.Bikeid==bookdetails.VehicleId).filter(models.Bikes.Status=="Active").first()
+            elif bookdetails.VehicleId[0]=='C':
+                  bookdetails.vech=db.query(models.Cars).filter(models.Cars.Carid==bookdetails.VehicleId).filter(models.Cars.Status=="Active").first()
+            json_compatible_item_data = jsonable_encoder(bookdetails)
+            return JSONResponse(content=json_compatible_item_data) 
+            
+    except JWTError:
+        raise HTTPException(status_code=401,detail="Unauthorized")
+
 

@@ -307,7 +307,7 @@
                                    {%if type=="Bike"%} 
                                     {% for i in fetch_vehicle %}
                                     <div class="col-md-4 col-12">
-                                        <a href="/vehicledetails">
+                                        <a href="/vehicledetails?id={{i.Bikeid}}&starttime={{starttime}}&endtime={{endtime}}&typee={{type}}&location={{location}}&place={{place}}">
                                         <section class="car-list-card">
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="admin/templates/bike_images/{{i.Image1}}">
@@ -360,7 +360,7 @@
                                     {%if type=="Car"%} 
                                     {% for i in fetch_vehicle %}   
                                     <div class="col-md-4 col-12">
-                                        <a href="/vehicledetails?id={{i.Carid}}&starttime={{starttime}}&endtime={{endtime}}&typee={{type}}">
+                                        <a href="/vehicledetails?id={{i.Carid}}&starttime={{starttime}}&endtime={{endtime}}&typee={{type}}&location={{location}}&place={{place}}">
                                         <section class="car-list-card">
                                             <div class="car-list-card-image" style="height: 160px;"><img
                                                     src="admin/templates/car_images/{{i.Image1}}">

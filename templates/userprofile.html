@@ -145,25 +145,46 @@
           <div class="mybooking d-none">
             
             <div class="d-flex flex-column mb-3">
+              {%for i in rented_vehicles%}
              <div class="card mb-3" style="max-width: 540px;">
                <div class="row g-0">
+                 {%for j in vehicledetails%}
+                  {% if i.VehicleId[0]=='B' and i.VehicleId==j.Bikeid%}
                  <div class="col-md-4 col-sm-12">
-                   <img src="templates/static/images/carr.jpg" class="img-fluid rounded-start crd-img"  alt="...">
-                 </div>
-                 <div class="col-md-8">
-                   <div class="card-body basic-details">
-                     <h5 class="card-title">Toyota Supra</h5>
-                     <span class="type">Automatic petrol 5seats</span>
-                    <div>
-                      <span>Price :- </span>
-                      <span>₹270/hr</span>
+                      <img src="admin/templates/bike_images/{{j.Image1}}" class="img-fluid rounded-start crd-img"  alt="...">
                     </div>
-                    <div>
-                      <span>Total Price :- </span>
-                      <span>₹2070</span>
+                    <div class="col-md-8">
+                      <div class="card-body basic-details">
+                        <h5 class="card-title">{{j.Bikename_model}}</h5>
+                        <span class="type">Automatic petrol 5seats</span>
+                        <div>
+                          <span>Price :- </span>
+                          <span>₹{{j.CostperHR}}/hr</span>
+                        </div>
+                        <div>
+                          <span>Total Price :- </span>
+                          <span>₹{{i.Totalcost}}</span>
                     </div>
+                    {% elif i.VehicleId[0]=='C' and i.VehicleId==j.Carid %}
+                    <div class="col-md-4 col-sm-12">
+                      <img src="admin/templates/car_images/{{j.Image1}}" class="img-fluid rounded-start crd-img"  alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body basic-details">
+                        <h5 class="card-title">{{j.Carname_model}}</h5>
+                        <span class="type">Automatic petrol 5seats</span>
+                        <div>
+                          <span>Price :- </span>
+                          <span>₹{{j.CostperHR}}/hr</span>
+                        </div>
+                        <div>
+                          <span>Total Price :- </span>
+                          <span>₹{{i.Totalcost}}</span>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                     <div class="d-flex py-2 gap-4 justify-content-center">
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#book1">More Details</button>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="view_bookdetail('{{i.BookingId}}')">More Details</button>
                       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#feedback">Feed back</button>
                     </div>
                    
@@ -171,7 +192,8 @@
                  </div>
                </div>
              </div>
-             <div class="card mb-3" style="max-width: 540px;">
+             {% endfor %}
+              <!--<div class="card mb-3" style="max-width: 540px;">
                <div class="row g-0">
                  <div class="col-md-4">
                    <img src="templates/static/images/car.jpg" class="img-fluid rounded-start crd-img" alt="...">
@@ -225,7 +247,7 @@
                   </div>
                  </div>
                </div>
-             </div>
+             </div>-->
    
             </div>
    
@@ -251,28 +273,32 @@
       <div class="modal-body text-dark">
         <div class="row ">
           <div class="col-md-4 col-sm-2 mb-3">
-            <strong>Vehicle Name And Model</strong>
-            <span>Toyota Supra</span>
+            <strong>Vehicle Name And Model</strong><br>
+            <span id="vehiname">Toyota Supra</span>
           </div>
           <div class="col-md-4 col-sm-2 mb-3">
-            <strong>Specification</strong>
-            <span>Automatic,petrol,5seats</span>
+            <strong>Pyament Id</strong><br>
+            <span id="payid">Automatic,petrol,5seats</span>
           </div>
           <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
             <strong>Total Cost</strong>
-            <span>₹2070</span>
+            <span>₹<span id="totcost">₹2070</span></span>
           </div>
           <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
             <strong>Start Datetime</strong>
-            <span>20/3/2024,8:30 pm</span>
+            <span id="stime">20/3/2024,8:30 pm</span>
           </div>
           <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
             <strong>End Datetime</strong>
-            <span>23/3/2024,5:30 pm</span>
+            <span id="etime">23/3/2024,5:30 pm</span>
           </div>
           <div class="col-md-4 col-sm-2 mb-3 d-flex flex-column">
-            <strong>City and Place</strong>
-            <span>Chennai </span>
+            <strong>City</strong>
+            <span id="city">Chennai </span>
+          </div>
+          <div class="col-md-6 col-sm-2 mb-3 d-flex flex-column">
+            <strong>Location</strong>
+            <span id="location">Chennai </span>
           </div>
         </div>
       </div>
@@ -422,7 +448,39 @@
               starsSpan[i].classList.remove('checked');
           }
       }
-  }
+    }
+    function view_bookdetail(id){
+      $.ajax({
+        type: "PUT",
+        url :'/view_bookeddetails/'+id,
+        encode: true,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+
+      }).done(function(response){
+        if(response.VehicleId[0]=='B'){
+          $("#vehiname").text(response.vech.Bikename_model);
+
+        }
+        else if(response.VehicleId[0]=='C'){
+          $("#vehiname").text(response.vech.Carname_model);
+
+        }
+        $("#payid").text(response.PaymentId);
+        $("#totcost").text(response.Totalcost);
+        $("#stime").text(response.Pickuptime);
+        $("#etime").text(response.Droptime);
+        $("#city").text(response.City);
+        $("#location").text(response.Location);
+        $("#book1").modal('show');
+
+
+        
+
+      });
+
+    }
     
   </script>
 
