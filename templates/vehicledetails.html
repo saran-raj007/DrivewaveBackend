@@ -348,7 +348,8 @@
 
               </div>
               <div class="card-footer">
-                <button type="button" onclick="payment()">PROCEED TO PAY</button>
+              <!--  <button type="button" onclick="payment()">PROCEED TO PAY</button>-->
+                <div id="paypal-button-container"></div>
 
               </div>
 
@@ -377,6 +378,63 @@
       </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AaqtifeoLC2x3515Nc0IkaET9eMwyLTk7oFlv_Y5KTbnfKRT9S5gN52JOZ2xrunvC8o4c0UAd-0o1apO&currency=USD"></script>
+    <script>
+      // Render the PayPal button into #paypal-button-container
+      var money='{{final_amount}}'/80;
+      paypal.Buttons({
+          // Set up the transaction
+          createOrder: function(data, actions) {
+              return actions.order.create({
+                  purchase_units: [{
+                      amount: {
+                          value: money // Hardcoded amount for demo purposes
+                      }
+                  }]
+              });
+          },
+
+          // Finalize the transaction
+          onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                  alert('Transaction completed by ' + details.payer.name.given_name);
+                  let formData = new FormData();
+                  formData.append("vehicleid", "{{id}}");
+                  formData.append("starttime", "{{starttime}}");
+                  formData.append("endtime", "{{endtime}}");
+                  formData.append("final_cost", "{{final_amount}}");
+                  formData.append("paymentid", data.orderID);
+                  formData.append("city", "{{location}}");
+                  formData.append("location", "{{place}}");
+                
+                  $.ajax({
+                    type: "POST",
+                    url: "/payment",
+                    data: formData,
+                    encode: true,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                  }).done(function (data1) {
+                    if (data1 == "Done") {
+                      location.reload();
+                    } else {
+                      window.location.href="/login";
+                    }
+                  });
+                  // Call your server to save the transaction
+                  return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
+                      method: 'post'
+                  }).then(function(res) {
+                      return res.json();
+                  }).then(function(orderData) {
+                      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                  });
+              });
+          }
+
+      }).render('#paypal-button-container');
+  </script>
     <script>
         
       function payment() {

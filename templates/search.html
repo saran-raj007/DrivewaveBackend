@@ -179,13 +179,21 @@
                                 <strong>Sort by</strong>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12  mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "high-low" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="high-low" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="high-low">
+                                        {%endif%}
                                         <label for="">Ratings- High to Low</label>
                                     </div>  
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "low-high" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="low-high" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="low-high">
+                                        {%endif%}
                                         <label for="">Price- Low to High</label>
                                     </div>
                                 </div>
@@ -195,13 +203,21 @@
                                 <strong>Transmission</strong>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Manual" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Manual" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Manual">
+                                        {%endif%}
                                         <label for="">Manual</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Automatic" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Automatic" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Automatic">
+                                        {%endif%}
                                         <label for="">Automatic</label>
                                     </div>
                                 </div>
@@ -212,13 +228,21 @@
                                 <strong>Seats</strong>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "4/5 seater" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="4/5 seater" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="4/5 seater">
+                                        {%endif%}
                                         <label for="">4/5 seater</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "6/7 seater" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="6/7 seater" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="6/7 seater">
+                                        {%endif%}
                                         <label for="">6/7 seater</label>
                                     </div>
                                 </div>
@@ -228,25 +252,41 @@
                                 <strong>Car type</strong>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Hatchback" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Hatchback" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Hatchback">
+                                        {%endif%}
                                         <label for="">Hatchback</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Sedan" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Sedan" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Sedan">
+                                        {%endif%}
                                         <label for="">Sedan</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "SUV" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="SUV" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="SUV">
+                                        {%endif%}
                                         <label for="">SUV</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Luxury" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Luxury" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Luxury">
+                                        {%endif%}
                                         <label for="">Luxury</label>
                                     </div>
                                 </div>
@@ -257,21 +297,33 @@
                                 <strong> Fuel type </strong>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Petrol" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Petrol" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Petrol">
+                                        {%endif%}
                                         <label for="">Petrol</label>
                                     </div>
                                 </div>
                                 {%if type=="Car"%}
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Diesel" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Diesel" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Diesel">
+                                        {%endif%}
                                         <label for="">Diesel</label>
                                     </div>
                                 </div>
                                 {%endif%}
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-2">
                                     <div class="d-flex gap-3">
-                                        <input type="checkbox">
+                                        {% if "Electric" in ffdata %}
+                                        <input type="checkbox" onchange="applyfilter()" value="Electric" checked>
+                                        {%else%}
+                                        <input type="checkbox" onchange="applyfilter()" value="Electric">
+                                        {%endif%}
                                         <label for="">Electric</label>
                                     </div>
                                 </div>
@@ -923,4 +975,38 @@
     
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script>
+    function applyfilter(){
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+            let checkedValues = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkedValues.push(checkbox.value);
+                }
+            });
+            
+            console.log('Checked values:', checkedValues);
+            var url = "/filter?"+ "fdata=" + checkedValues +"&" +"typee=" + "{{type}}"+"&"+"place=" + "{{place}}" + "&" + "starttime=" + "{{starttime}}" + "&" + "endtime=" + "{{endtime}}" + "&" +"location=" + "{{location}}";
+            window.location.assign(url);
+          /*  $.ajax({
+                type: "GET",
+                url : "/filter?"+ "fdata=" + checkedValues +"&" +"typee=" + "{{type}}"+"&"+"place=" + "{{place}}" + "&" + "starttime=" + "{{starttime}}" + "&" + "endtime=" + "{{endtime}}" + "&" +"location=" + "{{location}}",
+                encode: true,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+        
+              }).done(function(response){
+                
+                  location.reload();
+                
+        
+              });*/
+
+            
+
+    }
+ </script>
 </html>

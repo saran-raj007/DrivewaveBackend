@@ -148,8 +148,9 @@
               {%for i in rented_vehicles%}
              <div class="card mb-3" style="max-width: 540px;">
                <div class="row g-0">
+                {% set temp = [] %}
                  {%for j in vehicledetails%}
-                  {% if i.VehicleId[0]=='B' and i.VehicleId==j.Bikeid%}
+                  {% if i.VehicleId[0]=='B' and i.VehicleId==j.Bikeid and i.VehicleId not in temp %}
                  <div class="col-md-4 col-sm-12">
                       <img src="admin/templates/bike_images/{{j.Image1}}" class="img-fluid rounded-start crd-img"  alt="...">
                     </div>
@@ -164,8 +165,11 @@
                         <div>
                           <span>Total Price :- </span>
                           <span>₹{{i.Totalcost}}</span>
-                    </div>
-                    {% elif i.VehicleId[0]=='C' and i.VehicleId==j.Carid %}
+                    </div> 
+                    {% set _ = temp.append(i.VehicleId) %}
+                     
+                  
+                    {% elif i.VehicleId[0]=='C' and i.VehicleId==j.Carid and i.VehicleId not in temp %}
                     <div class="col-md-4 col-sm-12">
                       <img src="admin/templates/car_images/{{j.Image1}}" class="img-fluid rounded-start crd-img"  alt="...">
                     </div>
@@ -181,6 +185,7 @@
                           <span>Total Price :- </span>
                           <span>₹{{i.Totalcost}}</span>
                     </div>
+                    {% set _ = temp.append(i.VehicleId) %}
                     {% endif %}
                     {% endfor %}
                     <div class="d-flex py-2 gap-4 justify-content-center">
