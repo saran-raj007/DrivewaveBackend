@@ -130,6 +130,20 @@ class Rentrequest(Base):
     #comman columns
     Status=Column(String(100),nullable=False)
     Created_at=Column(String(100),nullable=False)
+
+class Feedback(Base):
+    
+    __tablename__ = 'feedback'
+    id=Column(Integer,index=True,autoincrement=True, primary_key=True,nullable=False)
+    Feedbackid=Column(String(255),nullable=False)
+    Username=Column(String(255),nullable=False)
+    Vehicleid=Column(String(255),nullable=False)
+    Noofstarts=Column(Integer,nullable=False)
+    Review_Content=Column(String(255),nullable=False)
+    
+    #comman columns
+    Status=Column(String(100),nullable=False)
+    Created_at=Column(String(100),nullable=False)
     
     
     

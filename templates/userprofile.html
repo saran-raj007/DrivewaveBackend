@@ -190,7 +190,7 @@
                     {% endfor %}
                     <div class="d-flex py-2 gap-4 justify-content-center">
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="view_bookdetail('{{i.BookingId}}')">More Details</button>
-                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#feedback">Feed back</button>
+                      <button type="button" class="btn btn-success" data-bs-toggle="modal"  onclick="openfeedback('{{i.VehicleId}}')">Feed back</button>
                     </div>
                    
                    </div>
@@ -334,7 +334,8 @@
                 <span class="star" onclick="rate(4)">&#9734;</span>
                 <span class="star" onclick="rate(5)">&#9734;</span>
             </div>
-            <input type="hidden" id="rating" name="rating">
+            <input type="hidden"  id="rating" name="rating">
+            <input type="hidden" id="vid" name="vid" >
         </div>
         
             
@@ -347,7 +348,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary"onclick="Savefeedback()">Save</button>
         
       </div>
     </div>
@@ -446,6 +447,7 @@
     function rate(stars) {
       document.getElementById('rating').value = stars;
       var starsSpan = document.querySelectorAll('.stars .star');
+      alert(stars);
       for (var i = 0; i < starsSpan.length; i++) {
           if (i < stars) {
               starsSpan[i].classList.add('checked');
@@ -482,6 +484,37 @@
 
 
         
+
+      });
+
+    }
+    function openfeedback(id){
+      $("#vid").val(id);
+      $("#feedback").modal('show');
+
+    }
+    function Savefeedback(){
+      let formData = new FormData();
+      
+      formData.append("vid",$("#vid").val());
+      formData.append("rating",$("#rating").val());
+      formData.append("review",$("#review").val());
+      $.ajax({
+        type: "POST",
+        url :'/addreview',
+        data: formData,
+        encode: true,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+
+      }).done(function(response){
+        if(response=="Done"){
+          location.reload();
+        }
+        else{
+          $("#perr").text(response);
+        }
 
       });
 

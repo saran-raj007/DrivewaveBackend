@@ -20,25 +20,27 @@
                                 <th>Booking ID</th>
                                 <th>Username</th>
                                 <th>User emailid</th>
-                                <th>Vehicle Type</th>
+                                <th>Vehicle ID</th>
                                  <th>Total Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for i in rent%}
                             <tr> 
-                                <td>1</td>
-                                <td>B202412 </td>
-                                <td>Jeffry</td>
-                                <td>Jeffry@gmail.com</td>
-                                <td>Car</td>
-                                <td>₹2500</td>
+                                <td>{{loop.index}}</td>
+                                <td>{{i.BookingId}}</td>
+                                <td>{{i.Username}}</td>
+                                <td>{{i.Emailid}}</td>
+                                <td>{{i.VehicleId}}</td>
+                                <td>₹{{i.Totalcost}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#view_order" ><i class="far bi bi-eye-fill"></i></a>
+                                        <a href="#" class="btn btn-primary shadow btn-xs sharp me-1" type="button" data-bs-toggle="modal" data-bs-target="#view_order" onclick="viewrent({{i.id}})" ><i class="far bi bi-eye-fill"></i></a>
                                     </div>
                                 </td>												
                             </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -52,7 +54,7 @@
     Add Guest start
 ***********************************-->
 <!-- Modal -->
-<div class="modal fade guestadd" id="view_order">
+<div class="modal fade guestadd" id="view_rent">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -63,41 +65,45 @@
                 <div class="row mb-4">
                     <div class="col">
                         <label>Booking Id</label><br>
-                        <span id="view_orid">B202412</span>
+                        <span id="bkid">B202412</span>
                     </div>
                     <div class="col">
                         <label>Username</label><br>
-                        <span id="view_ordate">Jeffry</span>
+                        <span id="uname">Jeffry</span>
                     </div>
                     <div class="col">
                         <label>User EmailID</label><br>
-                        <span id="view_cusname">Jeffry@gmail.com</span>
+                        <span id="umailid">Jeffry@gmail.com</span>
                     </div>
 
                 </div>
                 <div class="row mb-4">
                     <div class="col">
                         <label>Total Price</label><br>
-                        <span id="view_nopro">₹2500</span>
+                       <span>₹<span id="totcost">2500</span></span>
                     </div>
                     <div class="col">
                         <label>Pickup Datetime</label><br>
-                        <span id="view_orprice">17-3-2024,2:00 pm</span>
+                        <span id="startt">17-3-2024,2:00 pm</span>
                     </div>
                     <div class="col">
                         <label>Drop Datetime</label><br>
-                        <span id="view_orphno">18-3-2024,10:00 am</span>
+                        <span id="endt">18-3-2024,10:00 am</span>
                     </div>
 
                 </div>
                 <div class="row mb-4">
                     <div class="col-md-4">
                         <label>Vehicle Type</label><br>
-                        <span id="view_pin">Car</span>
+                        <span id="vcid">Car</span>
                     </div>
                     <div class="col-md-4">
                         <label> Vehicle Name and model</label><br>
-                        <span id="view_add"> Ford Mustang GT</span>
+                        <span id="vname"> Ford Mustang GT</span>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Payment Id</label><br>
+                        <span id="paymentid"> Ford Mustang GT</span>
                     </div>
                 </div>
             </div>
@@ -294,161 +300,41 @@
 <?php require_once 'include/bottom.php'; ?>
 <script>
   
-  function view_order(id){
+  function viewrent(id){
     $.ajax({
         type : 'PUT',
-        url : '/admin/view_order/'+id,
+        url : '/admin/viewrent/'+id,
         id : id,
         encode: true,
         dataType: 'json',
         processData: false,
         contentType: false,
     }).done(function(data){
-        $("#view_orid").html(data.order_id);
-        $("#view_ordate").html(data.order_received_date);
-        $("#view_cusname").html(data.customer_name);
-        $("#view_nopro").html(data.no_of_product);
-        $("#view_orprice").html(data.total_price);
-        $("#view_orphno").html(data.add.phone_no);
-        $("#view_add").html(data.add.complete_address);
-        $("#view_pin").html(data.add.pin_code);
-        $("#view_addtype").html(data.add.address_type);
-        $("#view_local").html(data.add.locality);
-        $("#view_land").html(data.add.landmark);
-        $("#view_paymentmethod").html(data.payment_method);
-        $("#view_paymentid").html(data.payment_id);
-        var tableContainer = document.getElementById("cre");
-        while (tableContainer.firstChild) {
-            tableContainer.removeChild(tableContainer.firstChild);
-        }
-        var no=0;
-        for(var i of data.allpro){
-            no++;
-            var tableRow = document.createElement("tr");
-            var td1 = document.createElement("td");
-            var td2 = document.createElement("td");
-            var td3 = document.createElement("td");
-            var td4 = document.createElement("td");
-            var td5 = document.createElement("td");
-            var td6 = document.createElement("td");
-
-            td1.textContent =no;
-            td2.textContent = i.product_id;
-            td3.textContent = i.product_name;
-            td4.textContent = i.quantity;
-            td5.textContent = i.offer_percentage+'%';
-            td6.textContent = i.price;
-            tableRow.appendChild(td1);
-            tableRow.appendChild(td2);
-            tableRow.appendChild(td3);
-            tableRow.appendChild(td4);
-            tableRow.appendChild(td5);
-            tableRow.appendChild(td6);
-            tableContainer.appendChild(tableRow);
+        $("#bkid").text(data.BookingId);
+        $("#uname").text(data.Username);
+        $("#umailid").text(data.Emailid);
+        $("#totcost").text(data.Totalcost);
+        $("#startt").text(data.Pickuptime);
+        $("#endt").text(data.Droptime);
+        if(data.VehicleId[0]=='B'){
+            $("#vcid").text("Bike");
+            $("#vname").text(data.vehicle.Bikename_model);
 
         }
-        var tableRow = document.createElement("tr");
-        var td1 = document.createElement("td");
-        var td2 = document.createElement("td");
-        td1.textContent ="Total Price";
-        td1.colSpan=5;
-        td2.textContent ='₹'+data.total_price;
-        tableRow.appendChild(td1);
-        tableRow.appendChild(td2);
-        tableContainer.appendChild(tableRow);
+        else{
+            $("#vcid").text("Cae");
+            $("#vname").text(data.vehicle.Carname_model);
 
+        }
+        $("#paymentid").text(data.PaymentId);
+    
 
-        $("#view_order").modal('show');
+        $("#view_rent").modal('show');
 
     });
   }
-  function print_bill(id){
-    $.ajax({
-        type : 'PUT',
-        url : '/admin/view_order/'+id,
-        id : id,
-        encode: true,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-    }).done(function(data){
-        $("#bill_cusname").html(data.add.full_Name);
-        $("#bill_phonenum").html(data.add.phone_no);
-        $("#bill_nopro").html(data.no_of_product);
-        $("#p_addtype").html(data.add.address_type);
-        $("#bill_local").html(data.add.locality);
-        $("#bill_land").html(data.add.landmark);
-        $("#bill_pin").html(data.add.pin_code);
-        $("#bill_altpno").html(data.add.alternative_phoneno);
-        $("#bill_cadd").html(data.add.complete_address);
-        $("#bill_paymentmethod").html(data.payment_method);
-        $("#bill_paymentid").html(data.payment_id);
-        var myLink = document.getElementById('print');
-        myLink.href=data.pdf;
-        myLink.download=data.pdf;
-        var tableContainer = document.getElementById("p_bill");
-        while (tableContainer.firstChild) {
-            tableContainer.removeChild(tableContainer.firstChild);
-        }
-        var no=0;
-        for(var i of data.allpro){
-            no++;
-            var tableRow = document.createElement("tr");
-            var td1 = document.createElement("td");
-            
-            var td3 = document.createElement("td");
-            var td4 = document.createElement("td");
-            var td5 = document.createElement("td");
-            var td6 = document.createElement("td");
-
-            td1.textContent =no;
-            td3.textContent = i.product_name;
-            td4.textContent = i.quantity;
-            td5.textContent = i.offer_percentage+'%';
-            td6.textContent = i.price;
-            tableRow.appendChild(td1);
-           
-            tableRow.appendChild(td3);
-            tableRow.appendChild(td4);
-            tableRow.appendChild(td5);
-            tableRow.appendChild(td6);
-            tableContainer.appendChild(tableRow);
-
-        }
-        var tableRow = document.createElement("tr");
-        var td1 = document.createElement("td");
-        var td2 = document.createElement("td");
-        td1.textContent ="Total Price";
-        td1.colSpan=4;
-        td2.textContent ='₹'+data.total_price;
-        tableRow.appendChild(td1);
-        tableRow.appendChild(td2);
-        tableContainer.appendChild(tableRow);
-
-        $("#print_bill").modal('show');
-
-
-    });
-
-  }
-  function change_status(id){
-    $("#statid").val(id);
-    $("#complete").modal('show');
-  }
-  function update_state(){
-    var id = document.getElementById('statid').value;
-        
-        $.ajax( {
-            type    : "get",
-            url     : '/admin/update_state/'+id,
-            id    : id,
-            contentType: "application/json",
-            success: function(data) {
-                location.reload();
-            },
-        });
-        return false;
-  }
+  
+ 
 
   
 </script>
