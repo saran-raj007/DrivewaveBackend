@@ -21,7 +21,7 @@ router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
 cities_in_india=list_cities_in_india()
 
-@router.get("/locationSelection")
+@router.get("/")
 def login_page(request:Request,db:Session=Depends(get_db)):
     login_status=0
     try:
@@ -31,7 +31,7 @@ def login_page(request:Request,db:Session=Depends(get_db)):
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
             return templates.TemplateResponse('select.html', context={'request': request,'cities_in_india':cities_in_india,"login_status":login_status}) 

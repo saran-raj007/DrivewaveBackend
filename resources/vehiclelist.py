@@ -34,7 +34,7 @@ def rentalpoints(request:Request,location:str,place:str,starttime:str,endtime:st
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
 
@@ -131,7 +131,7 @@ def rentalpoints(fdata:str,typee:str,place:str,starttime:str,endtime:str,locatio
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
 

@@ -18,6 +18,8 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 router.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
+
+
 @router.get("/vehicledetails")
 def rentalpoints(id:str,starttime:str,endtime:str,typee:str,location:str,place:str,request:Request,db:Session=Depends(get_db)):
     vehicle_details=None
@@ -35,7 +37,10 @@ def rentalpoints(id:str,starttime:str,endtime:str,typee:str,location:str,place:s
         vehicle_details=db.query(models.Cars).filter(models.Cars.Carid==id).filter(models.Cars.Status=="Active").first()
     total_cost=vehicle_details.CostperHR*total_hours
     final_amount=total_cost+500+120
-        
+    review=db.query(models.Feedback).filter(models.Feedback.Vehicleid==id).filter(models.Feedback.Status=="Active").all()
+    userdetails=[]
+    for i in review:
+        userdetails.append([i,db.query(models.User).filter(models.User.Username==i.Username).filter(models.User.Status=="Active").first()])
     login_status=0
     try:
         token = request.session["user"]
@@ -44,12 +49,12 @@ def rentalpoints(id:str,starttime:str,endtime:str,typee:str,location:str,place:s
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
-            return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost,"final_amount":final_amount,"location":location,"place":place,"id":id}) 
+            return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost,"final_amount":final_amount,"location":location,"place":place,"id":id,"review":review,"userdetails":userdetails}) 
     except:
-         return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost,"final_amount":final_amount,"location":location,"place":place,"id":id}) 
+         return templates.TemplateResponse('vehicledetails.html', context={'request': request,"login_status":login_status,"vehicle_details":vehicle_details,"type":typee,"starttime":starttime,"endtime":endtime,"total_cost":total_cost,"final_amount":final_amount,"location":location,"place":place,"id":id,"review":review,"userdetails":userdetails}) 
      
      
 
@@ -63,7 +68,7 @@ def rentalpoints(request:Request,db:Session=Depends(get_db)):
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
             return templates.TemplateResponse('payment.html', context={'request': request,"login_status":login_status}) 
@@ -81,7 +86,7 @@ def payment(request:Request,db:Session=Depends(get_db),vehicleid:str=Form(...),s
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
             total_booking=db.query(models.Rentrequest).all()

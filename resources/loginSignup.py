@@ -33,7 +33,6 @@ def logcheck(request:Request,db:Session=Depends(get_db),susername:str=Form(...),
         access_token = create_access_token(data={"user_name": susername,"user_email": semail},expires_delta=access_token_expires)
         sessid = access_token
         request.session["user"] = sessid
-        print(sessid)
         error= "Done"   
         json_compatible_item_data = jsonable_encoder(error)
         return JSONResponse(content=json_compatible_item_data)
@@ -65,4 +64,4 @@ def logcheck(request:Request,db:Session=Depends(get_db),lemail:str=Form(...),lpa
 @router.get("/logout")
 def logout(request:Request):
     request.session.clear()
-    return RedirectResponse("/locationSelection", status_code=303)
+    return RedirectResponse("/", status_code=303)

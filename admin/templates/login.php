@@ -7,7 +7,7 @@
                 <form action="/admin/logincheck" method="post">
                     <div class="form-body">
                         <div class="img-wrapper">
-                            <img src="htdocs/images/mainLogo.png" alt="LOGO">
+                            <img src="/admin/templates/images/logo.png" alt="LOGO">
                         </div>
                         <div class="user-input">
                             <label for="useremail" class="form-label">User Name</label>

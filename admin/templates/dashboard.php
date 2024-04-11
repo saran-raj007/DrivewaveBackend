@@ -9,7 +9,7 @@
         <div class="row available-rooms">
             <div class="col-lg-3 col-md-6">
                 <div class="detail-box">
-                    <h3>Total Bikes<span>{{total_orders}}</span></h3>
+                    <h3>Total Bikes<span>{{bikecount}}</span></h3>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="detail-box">
-                    <h3>Cars<span>{{completed_orders}}</span></h3>
+                    <h3>Cars<span>{{carcount}}</span></h3>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 43%;" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>

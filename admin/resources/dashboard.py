@@ -28,7 +28,17 @@ def getDashboard(request:Request,db:Session=Depends(get_db)):
 
             raise HTTPException(status_code=401,details="Unauthorized")
         else:
-             return templates.TemplateResponse('dashboard.php', context={'request': request})
+            bikecount=db.query(models.Bikes).filter(models.Bikes.Status=="Active").all()
+            carcount=db.query(models.Cars).filter(models.Cars.Status=="ACTIVE").all()
+            bikecount=len(bikecount)
+            carcount=len(carcount)
+            
+            return templates.TemplateResponse('dashboard.php', context={'request': request,"bikecount":bikecount,"carcount":carcount})
     
     except:
         return RedirectResponse("/admin/login", status_code=303)
+
+@router.get("/logout")
+def logout(request:Request):
+    request.session.clear()
+    return RedirectResponse("/admin/login", status_code=303)

@@ -55,7 +55,8 @@ def updateprofile(request:Request,db:Session=Depends(get_db),userid:str=Form(...
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+           # raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
             find=db.query(models.User).filter(models.User.id!=userid,models.User.Username==username,models.User.Emailid==usermail,models.User.Status=="Active").first()
@@ -70,7 +71,7 @@ def updateprofile(request:Request,db:Session=Depends(get_db),userid:str=Form(...
                 json_compatible_item_data = jsonable_encoder(error)
                 return JSONResponse(content=json_compatible_item_data) 
     except:
-        raise HTTPException(status_code=401,detail="Unauthorized")
+        return RedirectResponse("/login",status_code=303)
 
 
 @router.post("/updatePassword")
@@ -83,7 +84,7 @@ def updatepassword(request:Request,db:Session=Depends(get_db),userid:str=Form(..
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
             find=db.query(models.User).filter(models.User.id==userid,models.User.Password==currpassword,models.User.Status=="Active").first()
@@ -98,7 +99,7 @@ def updatepassword(request:Request,db:Session=Depends(get_db),userid:str=Form(..
                 json_compatible_item_data = jsonable_encoder(error)
                 return JSONResponse(content=json_compatible_item_data) 
     except:
-        raise HTTPException(status_code=401,detail="Unauthorized")
+        return RedirectResponse("/login",status_code=303)
     
 
 
@@ -112,7 +113,7 @@ def view_bookeddetails(id:str,request:Request,db:Session=Depends(get_db)):
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             bookdetails=db.query(models.Rentrequest).filter(models.Rentrequest.BookingId==id).filter(models.Rentrequest.Status=="Active").first()
             if bookdetails.VehicleId[0]=='B':
@@ -123,7 +124,7 @@ def view_bookeddetails(id:str,request:Request,db:Session=Depends(get_db)):
             return JSONResponse(content=json_compatible_item_data) 
             
     except JWTError:
-        raise HTTPException(status_code=401,detail="Unauthorized")
+        return RedirectResponse("/login",status_code=303)
 
 
 
@@ -137,7 +138,7 @@ def updatepassword(request:Request,db:Session=Depends(get_db),vid:str=Form(...),
         usermail: str= payload.get("user_email")
         
         if username is None or usermail is None:
-            raise HTTPException(status_code=401,detail="Unauthorized")
+            return RedirectResponse("/login",status_code=303)
         else:
             login_status=1
             c=db.query(models.Feedback).all()
@@ -149,4 +150,4 @@ def updatepassword(request:Request,db:Session=Depends(get_db),vid:str=Form(...),
             json_compatible_item_data = jsonable_encoder(error)
             return JSONResponse(content=json_compatible_item_data) 
     except:
-        raise HTTPException(status_code=401,detail="Unauthorized")
+       return RedirectResponse("/login",status_code=303)

@@ -498,7 +498,7 @@
     function edit_bike(id){
         $.ajax({
             type : 'PUT',
-            url :'/admin/view_bike/'+ id,
+            url :'/admin/edit_bike/'+ id,
             id :id ,
             encode: true,
             dataType: 'json',
@@ -506,13 +506,11 @@
             contentType: false,
         }).done(function(data){
            
-            alert(data.location);
             var image_path1 = "/admin/templates/bike_images/" + data.Image1;
             var image_path2 = "/admin/templates/bike_images/" + data.Image2;
             var image_path3 = "/admin/templates/bike_images/" + data.Image3;
             var image_path4 = "/admin/templates/bike_images/" + data.Image4;
             let lodiv=document.getElementById('edit_location');
-             alert(lodiv);
              while (lodiv&&lodiv.firstChild) {
                 lodiv.removeChild(lodiv.firstChild);
             }

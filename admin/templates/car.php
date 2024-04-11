@@ -532,7 +532,7 @@
     function edit_car(id){
         $.ajax({
             type : 'PUT',
-            url :'/admin/view_car/'+ id,
+            url :'/admin/edit_car/'+ id,
             id :id ,
             encode: true,
             dataType: 'json',
@@ -544,7 +544,7 @@
             var image_path3 = "templates/car_images/" + data.Image3;
             var image_path4 = "templates/car_images/" + data.Image4;
             let lodiv=document.getElementById('edit_location');
-            alert(lodiv);
+        
              while (lodiv&&lodiv.firstChild) {
                 lodiv.removeChild(lodiv.firstChild);
             }

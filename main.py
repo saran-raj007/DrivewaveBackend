@@ -27,9 +27,9 @@ app.mount("/templates", StaticFiles(directory="templates"), name="templates")
 app.mount("/admin/templates", StaticFiles(directory="admin/templates"), name="templates")
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/")
-def index(request:Request):
-    return {"hello": "Drive Wave"}
+# @app.get("/")
+# def index(request:Request):
+#     return {"hello": "Drive Wave"}
 
 app.include_router(router, prefix='')
 

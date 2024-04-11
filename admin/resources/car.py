@@ -124,12 +124,31 @@ def view_bike(id:int,request:Request,db:Session=Depends(get_db)):
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             vcar=db.query(models.Cars).filter(models.Cars.id==id,models.Cars.Status=="Active").first()
-            vcar.location= get_place(vcar.Cityname,None,None)
+            #vcar.location= get_place(vcar.Cityname,None,None)
             json_compatible_item_data = jsonable_encoder(vcar)
             return JSONResponse(content=json_compatible_item_data)
     except JWTError:
             raise HTTPException(status_code=401,detail="Unauthorized")
         #raise HTTPException(status_code=401,detail="Unauthorized")
+
+
+@router.put("/edit_car/{id}")
+def view_bike(id:int,request:Request,db:Session=Depends(get_db)):
+    
+    try:
+        token=request.session["admin"]
+        payload=jwt.decode(token,BaseConfig.SECRET_KEY,algorithms=[BaseConfig.ALGORITHM])
+        user_name:str=payload.get('user_name')
+
+        if user_name is None :
+            raise HTTPException(status_code=401,detail="Unauthorized")
+        else:
+            vcar=db.query(models.Cars).filter(models.Cars.id==id,models.Cars.Status=="Active").first()
+            vcar.location= get_place(vcar.Cityname,None,None)
+            json_compatible_item_data = jsonable_encoder(vcar)
+            return JSONResponse(content=json_compatible_item_data)
+    except JWTError:
+            raise HTTPException(status_code=401,detail="Unauthorized")
         
     
 @router.post("/update_car")

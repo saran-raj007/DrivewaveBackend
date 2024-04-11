@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login and Signup Form</title>
+  <title>Login and Signup</title>
   <link rel="stylesheet" href="templates/static/css/style.css">
 
 </head>
@@ -82,7 +82,7 @@
         return false;
       });
       function SignUp(){
-        alert("*")
+      
         let formData =new FormData();
         formData.append("susername",$("#susername").val());
         formData.append("semail",$("#semail").val());
@@ -100,7 +100,7 @@
         }).done(function(response){
           if(response=="Done"){
         
-            window.location.href="/locationSelection";
+            window.location.href="/";
       
               
           }
@@ -126,7 +126,7 @@
         }).done(function(response){
           if(response=="Done"){
         
-            window.location.href="/locationSelection";
+            window.location.href="/";
       
           }
           else{

@@ -127,6 +127,25 @@ async def view_bike(id:int,request:Request,db:Session=Depends(get_db)):
             raise HTTPException(status_code=401,detail="Unauthorized")
         else:
             vbike=db.query(models.Bikes).filter(models.Bikes.id==id,models.Bikes.Status=="Active").first()
+           # vbike.location= get_place(vbike.Cityname,None,None)
+            json_compatible_item_data = jsonable_encoder(vbike)
+            return JSONResponse(content=json_compatible_item_data)
+    except JWTError:
+        return RedirectResponse("/admin/login", status_code=303)
+
+
+@router.put("/edit_bike/{id}")
+async def view_bike(id:int,request:Request,db:Session=Depends(get_db)):
+    
+    try:
+        token=request.session["admin"]
+        payload=jwt.decode(token,BaseConfig.SECRET_KEY,algorithms=[BaseConfig.ALGORITHM])
+        user_name:str=payload.get('user_name')
+
+        if user_name is None :
+            raise HTTPException(status_code=401,detail="Unauthorized")
+        else:
+            vbike=db.query(models.Bikes).filter(models.Bikes.id==id,models.Bikes.Status=="Active").first()
             vbike.location= get_place(vbike.Cityname,None,None)
             json_compatible_item_data = jsonable_encoder(vbike)
             return JSONResponse(content=json_compatible_item_data)
