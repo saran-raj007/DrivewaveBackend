@@ -94,6 +94,15 @@ def payment(request:Request,db:Session=Depends(get_db),vehicleid:str=Form(...),s
             data=models.Rentrequest(BookingId=bookingid,Username=username,Emailid=usermail,VehicleId=vehicleid,Pickuptime=starttime,Droptime=endtime,Totalcost=final_cost,PaymentId=paymentid,City=city,Location=location,TimeofpaymentCompletion=current_datetime,Status="Active",Created_at=current_datetime)
             db.add(data)
             db.commit()
+            if vehicleid[0]=='B':
+                k=db.query(models.Bikes).filter(models.Bikes.Bikeid==vehicleid,models.Bikes.Status=="Active").first()
+                db.query(models.Bikes).filter(models.Bikes.Bikeid==vehicleid).update({"Nooftrips":(k.Nooftrips)+1})
+                db.commit()
+            else:
+                k=db.query(models.Cars).filter(models.Cars.Carid==vehicleid,models.Cars.Status=="Active").first()
+                db.query(models.Cars).filter(models.Cars.Carid==vehicleid).update({"Nooftrips":(k.Nooftrips)+1})
+                db.commit()
+                
             error = "Done"
             json_compatible_item_data = jsonable_encoder(error)
             return JSONResponse(content=json_compatible_item_data)
