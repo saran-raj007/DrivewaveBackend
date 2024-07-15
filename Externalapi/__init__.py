@@ -26,16 +26,39 @@ def get_lat_lon(city):
         "q": city,
         "format": "json"
     }
-    response = requests.get(base_url, params=params)
+    headers = {
+    'User-Agent': 'Drivewaverental/1.0 (k.saranraj000@gmail.com)'
+    }
+    response = requests.get(base_url, params=params,headers=headers)
+    print(response)
     data = response.json()
     if data:
         return float(data[0]['lat']), float(data[0]['lon'])
     else:
         return None, None
+    # try:
+    #     response = requests.get(base_url, params=params,headers=headers)
+    #     response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
+    # except requests.exceptions.RequestException as e:
+    #     print(f"Error during requests to {base_url} : {str(e)}")
+    #     return None, None
+
+    # try:
+    #     data = response.json()
+    # except requests.exceptions.JSONDecodeError as e:
+    #     print(f"Error parsing JSON response: {str(e)}")
+    #     return None, None
+
+    # if data:
+    #     return float(data[0]['lat']), float(data[0]['lon'])
+    # else:
+    #     print(f"No data found for city: {city}")
+    #     return None, None
 
 def get_place(city_name,lat,long):
     
     latitude, longitude = get_lat_lon(city_name)
+    print(latitude, longitude)
     if latitude is not None and longitude is not None:
         url = "https://api.foursquare.com/v3/places/search?fields=location"
 

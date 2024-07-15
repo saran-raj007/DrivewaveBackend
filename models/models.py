@@ -48,7 +48,6 @@ class Admin(Base):
     Username=Column(String(255),nullable=False)
     Password=Column(String(255),nullable=False)
 
-
     #comman columns
     Status=Column(String(100),nullable=False)
     Created_at=Column(String(100),nullable=False)
