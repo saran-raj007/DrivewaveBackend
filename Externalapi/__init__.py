@@ -27,7 +27,7 @@ def get_lat_lon(city):
         "format": "json"
     }
     headers = {
-    'User-Agent': 'Drivewaverental/1.0 (k.saranraj000@gmail.com)'
+    'User-Agent': 'Drivewaverental/1.0 (enter your email id)'
     }
     response = requests.get(base_url, params=params,headers=headers)
     print(response)
